@@ -1,37 +1,25 @@
-import { useEffect } from "react";
-import firestore from "./shared/firestore";
-import logo from "./logo.svg";
+import { Component } from "react";
+// import firestore from "./shared/firestore";
+import { Routes, Route } from "react-router-dom";
+
+import PlannerPage from "./pages/AppPages/PlannerPage/PlannerPage";
+import ReviewPage from "./pages/AppPages/ReviewPage/ReviewPage";
+import LogginPage from "./pages/LogginPage/LogginPage";
+import appRoutes from "./shared/appRoutes";
 import "./App.css";
 
-function App() {
-  //test firestore
-  useEffect(() => {
-    firestore
-      .collection("tests")
-      .get()
-      .then((querySnapshot) => {
-        console.log(querySnapshot.docs.map((doc) => doc.data()));
-      });
-  });
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <Routes>
+          <Route path={appRoutes.loggin} element={<LogginPage />} />
+          <Route path={appRoutes.planner} element={<PlannerPage />} />
+          <Route path={appRoutes.review} element={<ReviewPage />} />
+        </Routes>
+      </div>
+    );
+  }
 }
 
 export default App;
