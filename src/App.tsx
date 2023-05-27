@@ -1,8 +1,17 @@
-import React from 'react';
+import {useEffect} from 'react';
+import firestore from './shared/firestore';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+
+  //test firestore
+  useEffect(() =>{
+    firestore.collection("tests").get().then(querySnapshot => {
+      console.log(querySnapshot.docs.map(doc => doc.data()))
+    })
+  })
+
   return (
     <div className="App">
       <header className="App-header">
