@@ -9,3 +9,4 @@ npx create-react-app . --template typescript
 ```
 3. setup firebase: 
 [firebase 設置方法](https://hackmd.io/@akairisu/SkqDiM673)
+4. npm install react-router-dom
