@@ -7,7 +7,7 @@ import "firebase/compat/firestore";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
+  apiKey: "AIzaSyB7WRPfzqlGlR4BmpSOPyoAvCp2zrKjHLs",
   authDomain: "time-ledger.firebaseapp.com",
   projectId: "time-ledger",
   storageBucket: "time-ledger.appspot.com",
@@ -17,7 +17,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore(app);
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore(firebaseApp);
 
-export default db;
+export { firebaseApp, db };

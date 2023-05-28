@@ -1,0 +1,35 @@
+.login-page{
+  background-color: #1C3144;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.login-title{
+  font-family: Lobster;
+  font-size: 5rem;
+  color: #EEE9DA;
+
+  margin-bottom: 50px; /* adjust the distance with bnt*/
+}
+.login-bnt{
+  border-style: solid;
+  border-color: #EEE9DA;
+  border-radius: 30px;
+
+  width: 210px;
+  height: 45px;
+  color: #EEE9DA;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login-bnt img{
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+}
