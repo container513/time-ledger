@@ -3,25 +3,25 @@ import { useNavigate } from "react-router-dom";
 import { firebaseApp } from "../../shared/firestore";
 import GoogleLogo from "../../assets//images/google-logo.png";
 import appRoutes from "../../shared/appRoutes";
-import "./LogginPage.css";
+import "./LoginPage.css";
 
 interface Props {
-  handleLoggin:  () => void;
+  handleLogin:  () => void;
 }
 
-const LogginBnt = ({ handleLoggin }: Props) => {
+const LoginBnt = ({ handleLogin }: Props) => {
   return (
-    <div className="login-bnt" onClick={handleLoggin}>
+    <div className="login-bnt" onClick={handleLogin}>
       <img src={GoogleLogo} alt="Google Logo" />
       Log in with Google
     </div>
   );
 };
 
-const LogginPage = () => {
+const LoginPage = () => {
   const navigate = useNavigate();
 
-  const logginWithGoogle = async () => {
+  const loginWithGoogle = async () => {
     console.log("Log in With Google");
     const auth = getAuth(firebaseApp);
     const provider = new GoogleAuthProvider();
@@ -39,9 +39,9 @@ const LogginPage = () => {
   return (
     <div className="login-page">
       <div className="login-title">TimeLedger</div>
-      <LogginBnt handleLoggin={logginWithGoogle} />
+      <LoginBnt handleLogin={loginWithGoogle} />
     </div>
   );
 };
 
-export default LogginPage;
+export default LoginPage;

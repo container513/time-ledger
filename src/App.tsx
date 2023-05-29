@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 
 import PlannerPage from "./pages/AppPages/PlannerPage/PlannerPage";
 import ReviewPage from "./pages/AppPages/ReviewPage/ReviewPage";
-import LogginPage from "./pages/LogginPage/LogginPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
 import appRoutes from "./shared/appRoutes";
 import "./App.css";
 
@@ -13,7 +13,7 @@ class App extends Component {
     return (
       <div className="App">
         <Routes>
-          <Route path={appRoutes.loggin} element={<LogginPage />} />
+          <Route path={appRoutes.login} element={<LoginPage />} />
           <Route path={appRoutes.planner} element={<PlannerPage />} />
           <Route path={appRoutes.review} element={<ReviewPage />} />
         </Routes>
