@@ -7,7 +7,7 @@ import "firebase/compat/firestore";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyB7WRPfzqlGlR4BmpSOPyoAvCp2zrKjHLs",
+  apiKey: process.env.REACT_APP_FIRESTORE_KEY,
   authDomain: "time-ledger.firebaseapp.com",
   projectId: "time-ledger",
   storageBucket: "time-ledger.appspot.com",
@@ -19,5 +19,22 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore(firebaseApp);
+
+const getUserData = async (uid: string) => {
+  const userRef = db.collection(uid).doc();
+  const userData = await userRef.get();
+  return userData.data();
+};
+
+const addGoal = async (uid: string, goal: string) => {};
+
+const addSubGoal = async (uid: string, goal: string, subGoal: string) => {};
+
+const addTask = async (
+  uid: string,
+  goal: string,
+  subGoal: string,
+  task: string
+) => {};
 
 export { firebaseApp, db };
