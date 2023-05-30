@@ -1,11 +1,15 @@
-import { Component, useEffect } from "react";
-// import firestore from "./shared/firestore";
+import { useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
 import PlannerPage from "./pages/AppPages/PlannerPage/PlannerPage";
 import ReviewPage from "./pages/AppPages/ReviewPage/ReviewPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import appRoutes from "./shared/appRoutes";
+import {
+  ControlContext,
+  CtrlCtxStateDefaultVal,
+} from "./shared/controlContext";
+
 import "./App.css";
 
 const Index = () => {
@@ -20,11 +24,17 @@ const Index = () => {
   }, [navigate]);
 
   return <div>Redirecting...</div>;
-}
+};
 
-class App extends Component {
-  render() {
-    return (
+function App() {
+  const [state, setState] = useState(CtrlCtxStateDefaultVal.state);
+  return (
+    <ControlContext.Provider
+      value={{
+        state,
+        setState,
+      }}
+    >
       <div className="App">
         <Routes>
           <Route path={appRoutes.index} element={<Index />} />
@@ -33,8 +43,8 @@ class App extends Component {
           <Route path={appRoutes.review} element={<ReviewPage />} />
         </Routes>
       </div>
-    );
-  }
+    </ControlContext.Provider>
+  );
 }
 
 export default App;
