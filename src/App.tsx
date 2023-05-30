@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
-import PlannerPage from "./pages/AppPages/PlannerPage/PlannerPage";
-import ReviewPage from "./pages/AppPages/ReviewPage/ReviewPage";
+import AppPages from "./pages/AppPages/AppPages";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import appRoutes from "./shared/appRoutes";
 import {
@@ -39,8 +38,8 @@ function App() {
         <Routes>
           <Route path={appRoutes.index} element={<Index />} />
           <Route path={appRoutes.login} element={<LoginPage />} />
-          <Route path={appRoutes.planner} element={<PlannerPage />} />
-          <Route path={appRoutes.review} element={<ReviewPage />} />
+          <Route path={appRoutes.planner} element={<AppPages />} />
+          <Route path={appRoutes.review} element={<AppPages />} />
         </Routes>
       </div>
     </ControlContext.Provider>
