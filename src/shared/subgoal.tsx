@@ -1,4 +1,4 @@
-import { UUID } from "crypto";
+import { UUID, randomUUID } from "crypto";
 
 import Task from "./task";
 
@@ -12,15 +12,15 @@ class Subgoal {
   isClosed: boolean;
 
   constructor(
-    id: UUID,
-    goalId: UUID,
     name: string,
-    tasks: Task[],
+    goalId: UUID,
     deadline: Date,
-    accumMillisec: number,
-    isClosed: boolean
+    tasks: Task[] = [],
+    accumMillisec: number = 0,
+    isClosed: boolean = false,
+    id: UUID
   ) {
-    this.id = id;
+    this.id = id !== undefined ? id : randomUUID();
     this.goalId = goalId;
     this.name = name;
     this.tasks = tasks;

@@ -1,20 +1,20 @@
-import { UUID } from "crypto";
+import { UUID, randomUUID } from "crypto";
 
 class Schedule {
   id: UUID;
   taskId: UUID;
   date: Date;
-  startTime: Date;
-  endTime: Date;
+  startTime: Date | undefined;
+  endTime: Date | undefined;
 
   constructor(
-    id: UUID,
     taskId: UUID,
     date: Date,
-    startTime: Date,
-    endTime: Date
+    startTime: Date | undefined = undefined,
+    endTime: Date | undefined = undefined,
+    id?: UUID
   ) {
-    this.id = id;
+    this.id = id !== undefined ? id : randomUUID();
     this.taskId = taskId;
     this.date = date;
     this.startTime = startTime;
