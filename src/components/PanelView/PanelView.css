@@ -10,12 +10,18 @@
   font-size: 50px;
   color: #EEE9DA;
 
+  user-select: none;
+  -webkit-user-select: none;
+
   margin-top: 30px;
 }
 .panel-title{
   color: white;
   font-size: 30px;
   font-weight: bold;
+
+  user-select: none;
+  -webkit-user-select: none;
 
   margin-top: 30px;
 }

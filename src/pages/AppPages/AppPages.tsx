@@ -1,5 +1,4 @@
-import { Component, useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import PlannerPage from "../../pages/AppPages/PlannerPage/PlannerPage";
 import ReviewPage from "../../pages/AppPages/ReviewPage/ReviewPage";
