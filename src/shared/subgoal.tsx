@@ -3,6 +3,7 @@ import { UUID, randomUUID } from "crypto";
 import Task from "./task";
 
 class Subgoal {
+  static readonly type: string = "subgoal";
   id: UUID;
   goalId: UUID;
   name: string;

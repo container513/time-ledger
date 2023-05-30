@@ -3,6 +3,7 @@ import { UUID, randomUUID } from "crypto";
 import Subgoal from "./subgoal";
 
 class Goal {
+  static readonly type: string = "goal";
   id: UUID;
   name: string;
   subgoals: Subgoal[];

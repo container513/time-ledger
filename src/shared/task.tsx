@@ -3,6 +3,7 @@ import { UUID, randomUUID } from "crypto";
 import Schedule from "./schedule";
 
 class Task {
+  static readonly type: string = "task";
   id: UUID;
   parentId: UUID;
   name: string;

@@ -1,6 +1,7 @@
 import { UUID, randomUUID } from "crypto";
 
 class Schedule {
+  static readonly type: string = "schedule";
   id: UUID;
   taskId: UUID;
   date: Date;
