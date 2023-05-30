@@ -1,11 +1,11 @@
-import { UUID, randomUUID } from "crypto";
+import { v4 as uuid } from "uuid";
 
 import Schedule from "./schedule";
 
 class Task {
   static readonly type: string = "task";
-  id: UUID;
-  parentId: UUID;
+  id: string;
+  parentId: string;
   name: string;
   schedules: Schedule[];
   accumMsec: number;
@@ -13,13 +13,13 @@ class Task {
 
   constructor(
     name: string,
-    parentId: UUID,
+    parentId: string,
     schedules: Schedule[] = [],
     accumMsec: number = 0,
     isClosed: boolean = false,
-    id?: UUID
+    id?: string
   ) {
-    this.id = id !== undefined ? id : randomUUID();
+    this.id = id !== undefined ? id : uuid();
     this.parentId = parentId;
     this.name = name;
     this.schedules = schedules;
