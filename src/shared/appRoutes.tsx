@@ -1,4 +1,5 @@
 const routes = {
+  index: "/",
   login: "/login",
   planner: "/planner",
   review: "/review",
