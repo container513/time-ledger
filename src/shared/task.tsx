@@ -4,7 +4,7 @@ import Schedule from "./schedule";
 
 class Task {
   id: UUID;
-  subgoalId: UUID;
+  parentId: UUID;
   name: string;
   schedules: Schedule[];
   accumMillisec: number;
@@ -12,14 +12,14 @@ class Task {
 
   constructor(
     id: UUID,
-    subgoalId: UUID,
+    parentId: UUID,
     name: string,
     schedules: Schedule[],
     accumMillisec: number,
     isClosed: boolean
   ) {
     this.id = id;
-    this.subgoalId = subgoalId;
+    this.parentId = parentId;
     this.name = name;
     this.schedules = schedules;
     this.accumMillisec = accumMillisec;
