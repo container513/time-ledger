@@ -9,7 +9,7 @@ class Subgoal {
   name: string;
   tasks: Task[];
   deadline: Date;
-  accumMillisec: number;
+  accumMsec: number;
   isClosed: boolean;
 
   constructor(
@@ -17,7 +17,7 @@ class Subgoal {
     goalId: UUID,
     deadline: Date,
     tasks: Task[] = [],
-    accumMillisec: number = 0,
+    accumMsec: number = 0,
     isClosed: boolean = false,
     id: UUID
   ) {
@@ -26,7 +26,7 @@ class Subgoal {
     this.name = name;
     this.tasks = tasks;
     this.deadline = deadline;
-    this.accumMillisec = accumMillisec;
+    this.accumMsec = accumMsec;
     this.isClosed = isClosed;
   }
 }

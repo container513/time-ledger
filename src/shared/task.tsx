@@ -8,14 +8,14 @@ class Task {
   parentId: UUID;
   name: string;
   schedules: Schedule[];
-  accumMillisec: number;
+  accumMsec: number;
   isClosed: boolean;
 
   constructor(
     name: string,
     parentId: UUID,
     schedules: Schedule[] = [],
-    accumMillisec: number = 0,
+    accumMsec: number = 0,
     isClosed: boolean = false,
     id?: UUID
   ) {
@@ -23,7 +23,7 @@ class Task {
     this.parentId = parentId;
     this.name = name;
     this.schedules = schedules;
-    this.accumMillisec = accumMillisec;
+    this.accumMsec = accumMsec;
     this.isClosed = isClosed;
   }
 }
