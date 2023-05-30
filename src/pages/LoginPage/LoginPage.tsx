@@ -9,9 +9,9 @@ interface Props {
   handleLogin:  () => void;
 }
 
-const LoginBnt = ({ handleLogin }: Props) => {
+const LoginBtn = ({ handleLogin }: Props) => {
   return (
-    <div className="login-bnt" onClick={handleLogin}>
+    <div className="login-btn" onClick={handleLogin}>
       <img src={GoogleLogo} alt="Google Logo" />
       Log in with Google
     </div>
@@ -39,7 +39,7 @@ const LoginPage = () => {
   return (
     <div className="login-page">
       <div className="login-title">TimeLedger</div>
-      <LoginBnt handleLogin={loginWithGoogle} />
+      <LoginBtn handleLogin={loginWithGoogle} />
     </div>
   );
 };

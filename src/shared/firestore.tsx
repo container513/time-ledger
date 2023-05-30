@@ -20,21 +20,4 @@ const firebaseConfig = {
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore(firebaseApp);
 
-const getUserData = async (uid: string) => {
-  const userRef = db.collection(uid).doc();
-  const userData = await userRef.get();
-  return userData.data();
-};
-
-const addGoal = async (uid: string, goal: string) => {};
-
-const addSubGoal = async (uid: string, goal: string, subGoal: string) => {};
-
-const addTask = async (
-  uid: string,
-  goal: string,
-  subGoal: string,
-  task: string
-) => {};
-
 export { firebaseApp, db };
