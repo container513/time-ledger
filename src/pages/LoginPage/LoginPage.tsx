@@ -2,7 +2,7 @@ import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { firebaseApp } from "../../shared/firestore";
 import GoogleLogo from "../../assets//images/google-logo.png";
-import appRoutes from "../../shared/appRoutes";
+import routes from "../../shared/routes";
 import "./LoginPage.css";
 
 interface Props {
@@ -29,7 +29,7 @@ const LoginPage = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         console.log(result);
-        navigate(appRoutes.planner);
+        navigate(routes.planner);
       })
       .catch((error) => {
         console.log(error);

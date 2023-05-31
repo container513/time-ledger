@@ -3,7 +3,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 
 import AppPages from "./pages/AppPages/AppPages";
 import LoginPage from "./pages/LoginPage/LoginPage";
-import appRoutes from "./shared/appRoutes";
+import routes from "./shared/routes";
 import {
   ControlContext,
   CtrlCtxStateDefaultVal,
@@ -18,7 +18,7 @@ const Index = () => {
     console.log("Redirecting...");
     setTimeout(() => {
       // Redirects to login page, note the `replace: true`
-      navigate(appRoutes.login, { replace: true });
+      navigate(routes.login, { replace: true });
     }, 1000);
   }, [navigate]);
 
@@ -36,10 +36,10 @@ function App() {
     >
       <div className="App">
         <Routes>
-          <Route path={appRoutes.index} element={<Index />} />
-          <Route path={appRoutes.login} element={<LoginPage />} />
-          <Route path={appRoutes.planner} element={<AppPages />} />
-          <Route path={appRoutes.review} element={<AppPages />} />
+          <Route path={routes.index} element={<Index />} />
+          <Route path={routes.login} element={<LoginPage />} />
+          <Route path={routes.planner} element={<AppPages />} />
+          <Route path={routes.review} element={<AppPages />} />
         </Routes>
       </div>
     </ControlContext.Provider>
