@@ -1,24 +1,13 @@
-import { useState } from "react";
-import "./PanelView.css";
 import Goal from "../../shared/goal";
-
-const GoalView = (goal: Goal) => {
-  const [toggle, setToggle] = useState(false);
-  return (
-    <div>
-      <div onClick={() => setToggle(!toggle)}>{goal.name}</div>
-      {toggle &&
-        goal.subgoals.map((subgoal) => {
-          return <div>{subgoal.name}</div>;
-        })}
-    </div>
-  );
-};
+import SubGoal from "../../shared/subgoal";
+import GoalView from "./GoalView";
+import "./PanelView.css";
 
 const PanelView = () => {
-  const goal1 = new Goal("Goal 1", new Date());
-  const goal2 = new Goal("Goal 2", new Date());
-  const goal3 = new Goal("Goal 3", new Date());
+  const subgoal1 = new SubGoal("Subgoal 1", "123456", new Date());
+  const goal1 = new Goal("NLP Paper Survey", new Date(), [subgoal1]);
+  const goal2 = new Goal("NLP Paper Survey", new Date());
+  const goal3 = new Goal("ML HW10", new Date());
   const goals: Goal[] = [goal1, goal2, goal3];
 
   return (
