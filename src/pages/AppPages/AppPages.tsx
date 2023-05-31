@@ -15,6 +15,6 @@ const AppPages = () => {
       </Routes>
     </div>
   );
-}
+};
 
 export default AppPages;
