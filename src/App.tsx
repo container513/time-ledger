@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, Component } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
 import AppPages from "./pages/AppPages/AppPages";
@@ -25,25 +25,29 @@ const Index = () => {
   return <div>Redirecting...</div>;
 };
 
-function App() {
-  const [state, setState] = useState(CtrlCtxStateDefaultVal.state);
-  return (
-    <ControlContext.Provider
-      value={{
-        state,
-        setState,
-      }}
-    >
-      <div className="App">
-        <Routes>
-          <Route path={routes.index} element={<Index />} />
-          <Route path={routes.login} element={<LoginPage />} />
-          <Route path={routes.planner} element={<AppPages />} />
-          <Route path={routes.review} element={<AppPages />} />
-        </Routes>
-      </div>
-    </ControlContext.Provider>
-  );
+class App extends Component {
+  state = CtrlCtxStateDefaultVal.state;
+  render() {
+    return (
+      <ControlContext.Provider
+        value={{
+          state: this.state,
+          setState: (newState) => {
+            this.setState(newState);
+          },
+        }}
+      >
+        <div className="App">
+          <Routes>
+            <Route path={routes.index} element={<Index />} />
+            <Route path={routes.login} element={<LoginPage />} />
+            <Route path={routes.planner} element={<AppPages />} />
+            <Route path={routes.review} element={<AppPages />} />
+          </Routes>
+        </div>
+      </ControlContext.Provider>
+    );
+  }
 }
 
 export default App;

@@ -1,8 +1,12 @@
+import { useContext } from "react";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+
 import { firebaseApp } from "../../shared/firestore";
-import GoogleLogo from "../../assets//images/google-logo.png";
 import routes from "../../shared/routes";
+import { ControlContext } from "../../shared/controlContext";
+import GoogleLogo from "../../assets//images/google-logo.png";
+
 import "./LoginPage.css";
 
 interface Props {
@@ -20,15 +24,21 @@ const LoginBtn = ({ handleLogin }: Props) => {
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { setState } = useContext(ControlContext);
 
   const loginWithGoogle = async () => {
-    console.log("Log in With Google");
     const auth = getAuth(firebaseApp);
     const provider = new GoogleAuthProvider();
 
     signInWithPopup(auth, provider)
       .then((result) => {
-        console.log(result);
+        setState({
+          user: {
+            uid: result.user.uid,
+            name: result.user.displayName,
+            photoURL: result.user.photoURL,
+          },
+        });
         navigate(routes.planner);
       })
       .catch((error) => {
