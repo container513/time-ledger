@@ -14,8 +14,8 @@ const PanelView = () => {
     <div className="panel">
       <div className="panel-logo">TimeLedger</div>
       <div className="panel-title">GOALS</div>
-      {goals.map((goal) => {
-        return <GoalView {...goal} />;
+      {goals.map((goal, index) => {
+        return <GoalView key={index} {...goal} />;
       })}
     </div>
   );
