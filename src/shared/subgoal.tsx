@@ -19,7 +19,7 @@ class Subgoal {
     tasks: Task[] = [],
     accumMsec: number = 0,
     isClosed: boolean = false,
-    id: string
+    id?: string
   ) {
     this.id = id !== undefined ? id : uuid();
     this.goalId = goalId;
