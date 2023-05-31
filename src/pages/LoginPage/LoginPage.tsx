@@ -6,7 +6,7 @@ import appRoutes from "../../shared/appRoutes";
 import "./LoginPage.css";
 
 interface Props {
-  handleLogin:  () => void;
+  handleLogin: () => void;
 }
 
 const LoginBtn = ({ handleLogin }: Props) => {

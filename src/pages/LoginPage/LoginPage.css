@@ -9,7 +9,7 @@
   align-items: center;
 }
 .login-title {
-  font-family: Lobster;
+  font-family: Lobster, sans-serif;
   font-size: 5rem;
   color: #eee9da;
 
