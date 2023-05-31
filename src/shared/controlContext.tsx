@@ -13,7 +13,9 @@ type CtrlCtxType = {
 
 const CtrlCtxStateDefaultVal: CtrlCtxType = {
   state: { ongoingGoals: [] },
-  setState: () => {},
+  setState: () => {
+    // intentionally left blank
+  },
 };
 
 const ControlContext = createContext(CtrlCtxStateDefaultVal);
