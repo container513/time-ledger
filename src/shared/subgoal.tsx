@@ -12,7 +12,6 @@ class Subgoal {
   name: string;
   tasks: Task[];
   deadline: Date;
-  accumMsec: number;
   isClosed: boolean;
 
   constructor(
@@ -20,7 +19,6 @@ class Subgoal {
     goal: Goal,
     deadline: Date,
     tasks: Task[] = [],
-    accumMsec: number = 0,
     isClosed: boolean = false,
     id?: string
   ) {
@@ -29,7 +27,6 @@ class Subgoal {
     this.name = name;
     this.tasks = tasks;
     this.deadline = deadline;
-    this.accumMsec = accumMsec;
     this.isClosed = isClosed;
   }
 
@@ -43,7 +40,6 @@ class Subgoal {
       goal,
       subgoalData.deadline.toDate(),
       [],
-      subgoalData.accumMsec,
       subgoalData.isClosed,
       id
     );
@@ -58,7 +54,6 @@ interface SubgoalData {
   name: string;
   tasks: firebase.firestore.DocumentReference[];
   deadline: firebase.firestore.Timestamp;
-  accumMsec: number;
   isClosed: boolean;
 }
 
