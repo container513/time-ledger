@@ -1,7 +1,7 @@
 import { v4 as uuid } from "uuid";
 import firebase from "firebase/compat/app";
 
-import Schedule from "./schedule";
+import Schedule, { ScheduleData } from "./schedule";
 import Subgoal from "./subgoal";
 import Goal from "./goal";
 
@@ -28,6 +28,44 @@ class Task {
     this.schedules = schedules;
     this.accumMsec = accumMsec;
     this.isClosed = isClosed;
+  }
+
+  static async createFromTaskData(
+    id: string,
+    parent: Goal | Subgoal,
+    taskData: TaskData
+  ): Promise<Task> {
+    const subgoal = parent instanceof Subgoal ? parent : undefined;
+    const goal = parent instanceof Goal ? parent : subgoal!.goal;
+    const newTask = new Task(
+      taskData.name,
+      parent,
+      [],
+      taskData.accumMsec,
+      taskData.isClosed,
+      id
+    );
+
+    // get schedules
+    const fetchPromises = taskData.schedules.map(async (scheduleRef) => {
+      const snapshot = await scheduleRef.get();
+      return {
+        id: scheduleRef.id,
+        scheduleData: snapshot.data() as ScheduleData,
+      };
+    });
+    const snapshotsWithId = await Promise.all(fetchPromises);
+    const schedules = snapshotsWithId.map(({ id, scheduleData }) => {
+      return Schedule.createFromScheduleData(
+        id,
+        goal,
+        subgoal,
+        newTask,
+        scheduleData
+      );
+    });
+    newTask.schedules = schedules;
+    return newTask;
   }
 }
 

@@ -35,6 +35,7 @@ class Schedule {
   }
 
   static createFromScheduleData(
+    id: string,
     goal: Goal,
     subgoal: Subgoal | undefined,
     task: Task,
@@ -46,7 +47,8 @@ class Schedule {
       task,
       scheduleData.date.toDate(),
       timestampToDate(scheduleData.startTime),
-      timestampToDate(scheduleData.endTime)
+      timestampToDate(scheduleData.endTime),
+      id
     );
   }
 }
