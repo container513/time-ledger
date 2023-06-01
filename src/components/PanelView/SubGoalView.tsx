@@ -5,6 +5,7 @@ import NarrowRight from "../../assets/images/narrow-right.png";
 import NarrowDown from "../../assets/images/narrow-down.png";
 
 import "./SubGoalView.css";
+import { dateToString } from "../../shared/utils";
 
 const SubGoalView = (subgoal: SubGoal) => {
   const [toggle, setToggle] = useState(false);
@@ -28,7 +29,7 @@ const SubGoalView = (subgoal: SubGoal) => {
         </div>
         <div className="panel-subgoal-title">{subgoal.name}</div>
         <div className="panel-subgoal-date">
-          {subgoal.deadline.toDateString()}
+          {dateToString(subgoal.deadline)}
         </div>
       </div>
       <div className="panel-subgoal-child">

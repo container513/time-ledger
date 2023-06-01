@@ -30,10 +30,11 @@
 .panel-goal {
   color: white;
 }
-.panel-goals{
+.panel-goals {
   flex: 1 1;
   min-height: 0;
   overflow-y: auto;
+  overflow-x: hidden;
   margin: 0 15px;
 }
 .user-interface {
@@ -63,11 +64,11 @@
   margin-left: 30px;
   background-color: #eee9da;
 }
-.user-name{
+.user-name {
   color: #eee9da;
   font-size: 20px;
   margin-left: 10px;
-  margin-right: 105px;
+  margin-right: auto;
 }
 .review-icon {
   color: #eee9da;

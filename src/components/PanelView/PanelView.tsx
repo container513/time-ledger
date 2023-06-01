@@ -1,5 +1,5 @@
 import { AiOutlineSchedule, AiOutlineLogout } from "react-icons/ai";
-// import 
+// import
 import Goal from "../../shared/goal";
 import SubGoal from "../../shared/subgoal";
 import Task from "../../shared/task";
@@ -14,7 +14,7 @@ const PanelView = () => {
   const subgoal0 = new SubGoal("Implementation", goal0, new Date());
   const goal1 = new Goal("NLP Paper Survey", new Date(), [subgoal1, subgoal0]);
   const goal2 = new Goal("ML HW10", new Date());
-  const goals: Goal[] = [goal0, goal1, goal2];
+  const goals: Goal[] = [goal1, goal2];
 
   return (
     <div className="panel">
@@ -26,9 +26,7 @@ const PanelView = () => {
         })}
       </div>
       <div className="user-interface">
-        <div className="user-photo">
-
-        </div>
+        <div className="user-photo"></div>
         <div className="user-name">Shao-Yu Chu</div>
         <button className="panel-button">
           <AiOutlineSchedule className="review-icon" />
