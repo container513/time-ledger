@@ -1,6 +1,8 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 
+import Goal from "./goal";
+
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIRESTORE_KEY,
   authDomain: "time-ledger.firebaseapp.com",
@@ -15,4 +17,15 @@ const firebaseConfig = {
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore(firebaseApp);
 
-export { firebaseApp, db };
+const fetchOngoingGoals = async (uid: string) => {
+  const collectionRef = db.collection(uid);
+  const ongoingGoalRefs = await collectionRef
+    .where("type", "==", Goal.type)
+    .get();
+  ongoingGoalRefs.forEach((goalRef) => {
+    console.log(goalRef.id, " => ", goalRef.data());
+  });
+  // TODO
+};
+
+export { firebaseApp, fetchOngoingGoals };

@@ -1,4 +1,5 @@
 import { v4 as uuid } from "uuid";
+import firebase from "firebase/compat/app";
 
 import Subgoal from "./subgoal";
 import Task from "./task";
@@ -32,4 +33,15 @@ class Goal {
   }
 }
 
+interface GoalData {
+  type: string;
+  name: string;
+  subgoals: Subgoal[];
+  tasks: Task[];
+  deadline: firebase.firestore.Timestamp;
+  accumMsec: number;
+  isClosed: boolean;
+}
+
 export default Goal;
+export type { GoalData };

@@ -7,17 +7,14 @@ import GoalView from "./GoalView";
 import "./PanelView.css";
 
 const PanelView = () => {
-  const task1 = new Task("Read paper", "123456");
-  const task2 = new Task("Write Proposal", "123456");
-  const subgoal1 = new SubGoal("Proposal", "123456", new Date(), [
-    task1,
-    task2,
-  ]);
-  const subgoal2 = new SubGoal("Implementation", "123456", new Date());
-  const goal1 = new Goal("NLP Paper Survey", new Date(), [subgoal1, subgoal2]);
-  const goal2 = new Goal("NLP Paper Survey", new Date());
-  const goal3 = new Goal("ML HW10", new Date());
-  const goals: Goal[] = [goal1, goal2, goal3];
+  const goal0 = new Goal("NLP Paper Survey", new Date());
+  const task1 = new Task("Read paper", goal0);
+  const task2 = new Task("Write Proposal", goal0);
+  const subgoal1 = new SubGoal("Proposal", goal0, new Date(), [task1, task2]);
+  const subgoal0 = new SubGoal("Implementation", goal0, new Date());
+  const goal1 = new Goal("NLP Paper Survey", new Date(), [subgoal1, subgoal0]);
+  const goal2 = new Goal("ML HW10", new Date());
+  const goals: Goal[] = [goal0, goal1, goal2];
 
   return (
     <div className="panel">
