@@ -1,11 +1,13 @@
 import { v4 as uuid } from "uuid";
+import firebase from "firebase/compat/app";
 
 import Task from "./task";
+import Goal from "./goal";
 
 class Subgoal {
   static readonly type: string = "subgoal";
   id: string;
-  goalId: string;
+  goal: Goal;
   name: string;
   tasks: Task[];
   deadline: Date;
@@ -14,7 +16,7 @@ class Subgoal {
 
   constructor(
     name: string,
-    goalId: string,
+    goal: Goal,
     deadline: Date,
     tasks: Task[] = [],
     accumMsec: number = 0,
@@ -22,7 +24,7 @@ class Subgoal {
     id?: string
   ) {
     this.id = id !== undefined ? id : uuid();
-    this.goalId = goalId;
+    this.goal = goal;
     this.name = name;
     this.tasks = tasks;
     this.deadline = deadline;
@@ -31,4 +33,15 @@ class Subgoal {
   }
 }
 
+interface SubgoalData {
+  type: string;
+  goal: firebase.firestore.DocumentReference;
+  name: string;
+  tasks: firebase.firestore.DocumentReference[];
+  deadline: firebase.firestore.Timestamp;
+  accumMsec: number;
+  isClosed: boolean;
+}
+
 export default Subgoal;
+export type { SubgoalData };
