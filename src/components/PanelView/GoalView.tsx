@@ -1,21 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { dateToString } from "../../shared/utils";
 import SubGoalView from "./SubGoalView";
 import TaskView from "./TaskView";
 import Goal from "../../shared/goal";
 import NarrowRight from "../../assets/images/narrow-right.png";
 import NarrowDown from "../../assets/images/narrow-down.png";
 import "./GoalView.css";
-
-Date.prototype.toDateString = function () {
-  const format = {
-    minimumIntegerDigits: 2,
-    useGrouping: false,
-  };
-  var year = this.getFullYear();
-  var month = (this.getMonth() + 1).toLocaleString("en-US", format);
-  var day = this.getDate().toLocaleString("en-US", format);
-  return `${year}.${month}.${day}`;
-};
 
 const GoalView = (goal: Goal) => {
   const [toggle, setToggle] = useState(false);
@@ -38,7 +28,7 @@ const GoalView = (goal: Goal) => {
           )}
         </div>
         <div className="panel-goal-title">{goal.name}</div>
-        <div className="panel-goal-date">{goal.deadline.toDateString()}</div>
+        <div className="panel-goal-date">{dateToString(goal.deadline)}</div>
       </div>
       <div className="panel-goal-child">
         {toggle &&

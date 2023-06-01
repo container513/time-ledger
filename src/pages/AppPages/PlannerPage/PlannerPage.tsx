@@ -1,4 +1,3 @@
-import PanelView from "../../../components/PanelView/PanelView";
 import WeekView from "../../../components/WeekView/WeekView";
 
 const PlannerPage = () => {
@@ -7,6 +6,6 @@ const PlannerPage = () => {
       <WeekView />
     </div>
   );
-}
+};
 
 export default PlannerPage;
