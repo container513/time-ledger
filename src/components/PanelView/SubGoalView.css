@@ -36,9 +36,7 @@
 .panel-subgoal-date{
   font-size: 14px;
   color: #BDCDD6;
-
-  position: fixed;
-  left: 250px;
+  margin-left: auto;
 }
 
 .panel-goal-child{
@@ -47,6 +45,5 @@
 }
 
 .panel-subgoal-child{
-  position: relative;
-  left: 30px;
+  margin-left: 60px;
 }
