@@ -1,5 +1,6 @@
 import { v4 as uuid } from "uuid";
 import firebase from "firebase/compat/app";
+import _ from "lodash";
 
 import Subgoal from "./subgoal";
 import Task from "./task";
@@ -46,7 +47,10 @@ class Goal {
       goalData.isClosed,
       id
     );
-    const subgoals = await docRefsToSubgoals(newGoal, goalData.subgoals);
+    const subgoals = _.sortBy(
+      await docRefsToSubgoals(newGoal, goalData.subgoals),
+      ["deadline"]
+    );
     const tasks = await docRefsToTasks(newGoal, goalData.tasks);
     newGoal.subgoals = subgoals;
     newGoal.tasks = tasks;
