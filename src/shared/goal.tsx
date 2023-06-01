@@ -3,6 +3,7 @@ import firebase from "firebase/compat/app";
 
 import Subgoal from "./subgoal";
 import Task from "./task";
+import { docRefsToSubgoals, docRefsToTasks } from "./utils";
 
 class Goal {
   static readonly type: string = "goal";
@@ -31,13 +32,33 @@ class Goal {
     this.accumMsec = accumMsec;
     this.isClosed = isClosed;
   }
+
+  static async createFromGoalData(
+    id: string,
+    goalData: GoalData
+  ): Promise<Goal> {
+    const newGoal = new Goal(
+      goalData.name,
+      goalData.deadline.toDate(),
+      [],
+      [],
+      goalData.accumMsec,
+      goalData.isClosed,
+      id
+    );
+    const subgoals = await docRefsToSubgoals(newGoal, goalData.subgoals);
+    const tasks = await docRefsToTasks(newGoal, goalData.tasks);
+    newGoal.subgoals = subgoals;
+    newGoal.tasks = tasks;
+    return newGoal;
+  }
 }
 
 interface GoalData {
   type: string;
   name: string;
-  subgoals: Subgoal[];
-  tasks: Task[];
+  subgoals: firebase.firestore.DocumentReference[];
+  tasks: firebase.firestore.DocumentReference[];
   deadline: firebase.firestore.Timestamp;
   accumMsec: number;
   isClosed: boolean;

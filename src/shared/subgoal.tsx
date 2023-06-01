@@ -1,8 +1,9 @@
 import { v4 as uuid } from "uuid";
 import firebase from "firebase/compat/app";
 
-import Task, { TaskData } from "./task";
+import Task from "./task";
 import Goal from "./goal";
+import { docRefsToTasks } from "./utils";
 
 class Subgoal {
   static readonly type: string = "subgoal";
@@ -46,20 +47,7 @@ class Subgoal {
       subgoalData.isClosed,
       id
     );
-
-    // get tasks
-    const fetchPromises = subgoalData.tasks.map(async (taskRef) => {
-      const snapshot = await taskRef.get();
-      return {
-        taskId: taskRef.id,
-        taskData: snapshot.data() as TaskData,
-      };
-    });
-    const snapshotWithId = await Promise.all(fetchPromises);
-    const tasks = snapshotWithId.map(async ({ taskId, taskData }) => {
-      return Task.createFromTaskData(taskId, newSubgoal, taskData);
-    });
-    newSubgoal.tasks = await Promise.all(tasks);
+    newSubgoal.tasks = await docRefsToTasks(newSubgoal, subgoalData.tasks);
     return newSubgoal;
   }
 }

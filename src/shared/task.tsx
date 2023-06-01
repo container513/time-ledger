@@ -1,9 +1,10 @@
 import { v4 as uuid } from "uuid";
 import firebase from "firebase/compat/app";
 
-import Schedule, { ScheduleData } from "./schedule";
+import Schedule from "./schedule";
 import Subgoal from "./subgoal";
 import Goal from "./goal";
+import { docRefsToSchedule } from "./utils";
 
 class Task {
   static readonly type: string = "task";
@@ -45,26 +46,12 @@ class Task {
       taskData.isClosed,
       id
     );
-
-    // get schedules
-    const fetchPromises = taskData.schedules.map(async (scheduleRef) => {
-      const snapshot = await scheduleRef.get();
-      return {
-        scheduleId: scheduleRef.id,
-        scheduleData: snapshot.data() as ScheduleData,
-      };
-    });
-    const snapshotsWithId = await Promise.all(fetchPromises);
-    const schedules = snapshotsWithId.map(({ scheduleId, scheduleData }) => {
-      return Schedule.createFromScheduleData(
-        scheduleId,
-        goal,
-        subgoal,
-        newTask,
-        scheduleData
-      );
-    });
-    newTask.schedules = schedules;
+    newTask.schedules = await docRefsToSchedule(
+      goal,
+      subgoal,
+      newTask,
+      taskData.schedules
+    );
     return newTask;
   }
 }
