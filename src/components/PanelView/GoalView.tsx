@@ -20,7 +20,7 @@ Date.prototype.toDateString = function () {
 const GoalView = (goal: Goal) => {
   const [toggle, setToggle] = useState(false);
   return (
-    <div>
+    <div className="panel-goal-view">
       <div className="panel-goal" onClick={() => setToggle(!toggle)}>
         <div className="panel-goal-narrow">
           {!toggle ? (
