@@ -1,0 +1,52 @@
+.panel-subgoal {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; 
+}
+
+.panel-subgoal-narrow{
+  display: inline-block;
+  width: 17px;
+  height:17px;
+  position: relative;
+  left: 30px;
+  margin-right: 15px;
+  /* transition: transform 0.5s;
+  -webkit-transition: -webkit-transform 0.5s;
+  -o-transition: -o-transform 0.5s; */
+}
+
+.panel-subgoal-narrow-right{
+  height: 100%;
+  width: auto;
+}
+
+.panel-subgoal-narrow-down{
+  width: 100%;
+  height: auto;
+}
+
+.panel-subgoal-title{
+  font-size: 18px;
+  position: relative;
+  left: 30px;
+  color: white;
+}
+
+.panel-subgoal-date{
+  font-size: 14px;
+  color: #BDCDD6;
+
+  position: fixed;
+  left: 250px;
+}
+
+.panel-goal-child{
+  position: relative;
+  left: 30px;
+}
+
+.panel-subgoal-child{
+  position: relative;
+  left: 30px;
+}
