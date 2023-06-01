@@ -51,13 +51,13 @@ class Subgoal {
     const fetchPromises = subgoalData.tasks.map(async (taskRef) => {
       const snapshot = await taskRef.get();
       return {
-        id: taskRef.id,
+        taskId: taskRef.id,
         taskData: snapshot.data() as TaskData,
       };
     });
     const snapshotWithId = await Promise.all(fetchPromises);
-    const tasks = snapshotWithId.map(async ({ id, taskData }) => {
-      return await Task.createFromTaskData(id, newSubgoal, taskData);
+    const tasks = snapshotWithId.map(async ({ taskId, taskData }) => {
+      return Task.createFromTaskData(taskId, newSubgoal, taskData);
     });
     newSubgoal.tasks = await Promise.all(tasks);
     return newSubgoal;

@@ -50,14 +50,14 @@ class Task {
     const fetchPromises = taskData.schedules.map(async (scheduleRef) => {
       const snapshot = await scheduleRef.get();
       return {
-        id: scheduleRef.id,
+        scheduleId: scheduleRef.id,
         scheduleData: snapshot.data() as ScheduleData,
       };
     });
     const snapshotsWithId = await Promise.all(fetchPromises);
-    const schedules = snapshotsWithId.map(({ id, scheduleData }) => {
+    const schedules = snapshotsWithId.map(({ scheduleId, scheduleData }) => {
       return Schedule.createFromScheduleData(
-        id,
+        scheduleId,
         goal,
         subgoal,
         newTask,
