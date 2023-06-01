@@ -4,6 +4,7 @@ import firebase from "firebase/compat/app";
 import Goal from "./goal";
 import Subgoal from "./subgoal";
 import Task from "./task";
+import { timestampToDate } from "./utils";
 
 class Schedule {
   static readonly type: string = "schedule";
@@ -31,6 +32,22 @@ class Schedule {
     this.date = date;
     this.startTime = startTime;
     this.endTime = endTime;
+  }
+
+  static createFromScheduleData(
+    goal: Goal,
+    subgoal: Subgoal | undefined,
+    task: Task,
+    scheduleData: ScheduleData
+  ) {
+    return new Schedule(
+      goal,
+      subgoal,
+      task,
+      scheduleData.date.toDate(),
+      timestampToDate(scheduleData.startTime),
+      timestampToDate(scheduleData.endTime)
+    );
   }
 }
 
