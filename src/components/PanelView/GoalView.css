@@ -1,35 +1,43 @@
-.panel-goal{
+.panel-goal {
   display: flex;
   align-items: center;
+  margin-bottom: 10px;
 }
 
-.close-narrow{
+.panel-goal-narrow {
   display: inline-block;
   width: 17px;
-  height:17px;
+  height: 17px;
   position: relative;
   left: 30px;
   margin-right: 15px;
-  transition: transform 0.5s;
-  -webkit-transition: -webkit-transform 0.5s;
-  -o-transition: -o-transform 0.5s;
 }
 
-.close-narrow img{
+.panel-goal-narrow-right {
   height: 100%;
   width: auto;
 }
 
-.panel-goal-title{
+.panel-goal-narrow-down {
+  width: 100%;
+  height: auto;
+}
+
+.panel-goal-title {
   font-size: 18px;
   position: relative;
   left: 30px;
 }
 
-.panel-goal-date{
+.panel-goal-date {
   font-size: 14px;
-  color: #BDCDD6;
+  color: #bdcdd6;
 
   position: fixed;
   left: 250px;
+}
+
+.panel-goal-child {
+  position: relative;
+  left: 30px;
 }
