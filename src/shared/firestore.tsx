@@ -27,7 +27,7 @@ const fetchOngoingGoals = async (uid: string) => {
   querySnapshot.forEach((doc) => {
     goalPromises.push(Goal.createFromGoalData(doc.id, doc.data() as GoalData));
   });
-  return await Promise.all(goalPromises);
+  return Promise.all(goalPromises);
 };
 
 export { firebaseApp, fetchOngoingGoals };
