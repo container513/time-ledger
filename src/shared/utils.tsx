@@ -67,7 +67,7 @@ export const docRefsToSchedule = async (
     };
   });
   const snapshotsWithId = await Promise.all(fetchPromises);
-  const schedules = snapshotsWithId.map(({ scheduleId, scheduleData }) => {
+  return snapshotsWithId.map(({ scheduleId, scheduleData }) => {
     return Schedule.createFromScheduleData(
       scheduleId,
       goal,
@@ -76,5 +76,4 @@ export const docRefsToSchedule = async (
       scheduleData
     );
   });
-  return schedules;
 };
