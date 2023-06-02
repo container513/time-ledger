@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 import firebase from "firebase/compat/app";
-import moment, { Moment } from "moment";
+import moment, { Moment, Duration } from "moment";
 
 import Goal from "./goal";
 import Subgoal from "./subgoal";
@@ -59,6 +59,11 @@ class Schedule {
       id
     );
   }
+
+  getDuration = (): Duration | undefined => {
+    if (!this.startTime || !this.endTime) return undefined;
+    return moment.duration(this.endTime!.diff(this.startTime));
+  };
 }
 
 interface ScheduleData {
