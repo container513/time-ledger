@@ -1,5 +1,4 @@
 import firebase from "firebase/compat/app";
-import { Moment } from "moment";
 
 import Task, { TaskData } from "./task";
 import Subgoal, { SubgoalData } from "./subgoal";
@@ -12,9 +11,7 @@ export interface User {
   photoURL: string | null;
 }
 
-export const dateToString = (momentObj: Moment): string => {
-  return momentObj.format("YYYY.MM.DD");
-};
+export const dateFormatStr = "YYYY.MM.DD";
 
 export const docRefsToSubgoals = async (
   goal: Goal,
