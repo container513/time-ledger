@@ -19,8 +19,8 @@ const SubGoalView = (subgoal: SubGoal) => {
     visibility: "hidden",
   });
 
-  const addNewSubgoal = () => {
-    console.log("add new Subgoal");
+  const addNewTask = () => {
+    console.log("add new task");
   };
 
   return (
@@ -58,7 +58,7 @@ const SubGoalView = (subgoal: SubGoal) => {
         <div
           className="panel-subgoal-add"
           style={visible}
-          onClick={() => addNewSubgoal()}
+          onClick={() => addNewTask()}
         >
           <IoAddCircleOutline className="add-icon" />
         </div>

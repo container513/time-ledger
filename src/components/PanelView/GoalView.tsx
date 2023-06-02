@@ -19,8 +19,8 @@ const GoalView = (goal: Goal) => {
     visibility: "hidden",
   });
 
-  const addNewGoal = () => {
-    console.log("add new Goal");
+  const addNewSubgoal = () => {
+    console.log("add new Subgoal");
   };
 
   return (
@@ -58,7 +58,7 @@ const GoalView = (goal: Goal) => {
         <div
           className="panel-goal-add"
           style={visible}
-          onClick={() => addNewGoal()}
+          onClick={() => addNewSubgoal()}
         >
           <IoAddCircleOutline className="add-icon" />
         </div>
