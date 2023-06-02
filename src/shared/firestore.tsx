@@ -30,4 +30,17 @@ const fetchOngoingGoals = async (uid: string) => {
   return Promise.all(goalPromises);
 };
 
-export { firebaseApp, fetchOngoingGoals };
+const fetchGoalReviewStats = async (uid: string) => {
+  const collectionRef = db.collection(uid);
+  const querySnapshot = await collectionRef
+    .where("type", "==", Goal.type)
+    .get();
+  const goalPromises: Promise<Goal>[] = [];
+  querySnapshot.forEach((doc) => {
+    goalPromises.push(Goal.createFromGoalData(doc.id, doc.data() as GoalData));
+  });
+  const goals = await Promise.all(goalPromises);
+  return goals.map((goal) => goal.getReviewStats());
+};
+
+export { firebaseApp, fetchOngoingGoals, fetchGoalReviewStats };
