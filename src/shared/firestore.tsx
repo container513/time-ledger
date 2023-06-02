@@ -17,6 +17,12 @@ const firebaseConfig = {
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore(firebaseApp);
 
+const fetchGoal = async (goalId: string, uid: string) => {
+  const doc = await db.collection(uid).doc(goalId).get();
+  if (doc.data() === undefined) return null;
+  return Goal.createFromGoalData(doc.id, doc.data() as GoalData);
+};
+
 const fetchOngoingGoals = async (uid: string) => {
   const collectionRef = db.collection(uid);
   const querySnapshot = await collectionRef
@@ -43,4 +49,4 @@ const fetchGoalReviewStats = async (uid: string) => {
   return goals.map((goal) => goal.getReviewStats());
 };
 
-export { firebaseApp, fetchOngoingGoals, fetchGoalReviewStats };
+export { firebaseApp, fetchGoal, fetchOngoingGoals, fetchGoalReviewStats };
