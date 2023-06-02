@@ -1,4 +1,5 @@
 import { createContext, Dispatch, SetStateAction } from "react";
+import moment, { Moment } from "moment";
 
 import { User } from "./utils";
 
@@ -6,6 +7,7 @@ import Goal from "./goal";
 
 type CtrlCtxState = {
   user: User | undefined;
+  curTime: Moment;
   ongoingGoals: Goal[];
 };
 
@@ -15,7 +17,7 @@ type CtrlCtxType = {
 };
 
 const CtrlCtxStateDefaultVal: CtrlCtxType = {
-  state: { user: undefined, ongoingGoals: [] },
+  state: { user: undefined, curTime: moment(), ongoingGoals: [] },
   setState: () => {
     // Intentionally left blank
   },

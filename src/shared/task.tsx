@@ -12,14 +12,12 @@ class Task {
   parent: Subgoal | Goal;
   name: string;
   schedules: Schedule[];
-  accumMsec: number;
   isClosed: boolean;
 
   constructor(
     name: string,
     parent: Subgoal | Goal,
     schedules: Schedule[] = [],
-    accumMsec: number = 0,
     isClosed: boolean = false,
     id?: string
   ) {
@@ -27,7 +25,6 @@ class Task {
     this.parent = parent;
     this.name = name;
     this.schedules = schedules;
-    this.accumMsec = accumMsec;
     this.isClosed = isClosed;
   }
 
@@ -38,14 +35,7 @@ class Task {
   ): Promise<Task> {
     const subgoal = parent instanceof Subgoal ? parent : undefined;
     const goal = parent instanceof Goal ? parent : subgoal!.goal;
-    const newTask = new Task(
-      taskData.name,
-      parent,
-      [],
-      taskData.accumMsec,
-      taskData.isClosed,
-      id
-    );
+    const newTask = new Task(taskData.name, parent, [], taskData.isClosed, id);
     newTask.schedules = await docRefsToSchedule(
       goal,
       subgoal,
@@ -61,7 +51,6 @@ interface TaskData {
   parent: firebase.firestore.DocumentReference;
   name: string;
   schedules: firebase.firestore.DocumentReference[];
-  accumMsec: number;
   isClosed: boolean;
 }
 

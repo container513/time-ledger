@@ -1,5 +1,6 @@
 import { v4 as uuid } from "uuid";
 import firebase from "firebase/compat/app";
+import moment, { Moment } from "moment";
 
 import Task from "./task";
 import Goal from "./goal";
@@ -11,16 +12,14 @@ class Subgoal {
   goal: Goal;
   name: string;
   tasks: Task[];
-  deadline: Date;
-  accumMsec: number;
+  deadline: Moment;
   isClosed: boolean;
 
   constructor(
     name: string,
     goal: Goal,
-    deadline: Date,
+    deadline: Moment,
     tasks: Task[] = [],
-    accumMsec: number = 0,
     isClosed: boolean = false,
     id?: string
   ) {
@@ -29,7 +28,6 @@ class Subgoal {
     this.name = name;
     this.tasks = tasks;
     this.deadline = deadline;
-    this.accumMsec = accumMsec;
     this.isClosed = isClosed;
   }
 
@@ -41,9 +39,8 @@ class Subgoal {
     const newSubgoal = new Subgoal(
       subgoalData.name,
       goal,
-      subgoalData.deadline.toDate(),
+      moment(subgoalData.deadline),
       [],
-      subgoalData.accumMsec,
       subgoalData.isClosed,
       id
     );
@@ -58,7 +55,6 @@ interface SubgoalData {
   name: string;
   tasks: firebase.firestore.DocumentReference[];
   deadline: firebase.firestore.Timestamp;
-  accumMsec: number;
   isClosed: boolean;
 }
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { dateToString } from "../../shared/utils";
+import { dateFormatStr } from "../../shared/utils";
 import SubGoalView from "./SubGoalView";
 import TaskView from "./TaskView";
 import Goal from "../../shared/goal";
@@ -28,7 +28,9 @@ const GoalView = (goal: Goal) => {
           )}
         </div>
         <div className="panel-goal-title">{goal.name}</div>
-        <div className="panel-goal-date">{dateToString(goal.deadline)}</div>
+        <div className="panel-goal-date">
+          {goal.deadline.format(dateFormatStr)}
+        </div>
       </div>
       <div className="panel-goal-child">
         {toggle &&

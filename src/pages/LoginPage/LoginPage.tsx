@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
-import { firebaseApp } from "../../shared/firestore";
+import { fetchOngoingGoals, firebaseApp } from "../../shared/firestore";
 import routes from "../../shared/routes";
 import { ControlContext } from "../../shared/controlContext";
 import GoogleLogo from "../../assets//images/google-logo.png";
@@ -31,13 +31,15 @@ const LoginPage = () => {
     const provider = new GoogleAuthProvider();
 
     signInWithPopup(auth, provider)
-      .then((result) => {
+      .then(async (result) => {
+        const ongoingGoals = await fetchOngoingGoals(result.user.uid);
         setState({
           user: {
             uid: result.user.uid,
             name: result.user.displayName,
             photoURL: result.user.photoURL,
           },
+          ongoingGoals: ongoingGoals,
         });
         navigate(routes.planner);
       })

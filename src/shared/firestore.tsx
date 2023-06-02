@@ -1,7 +1,7 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 
-import Goal from "./goal";
+import Goal, { GoalData } from "./goal";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIRESTORE_KEY,
@@ -19,13 +19,15 @@ const db = firebase.firestore(firebaseApp);
 
 const fetchOngoingGoals = async (uid: string) => {
   const collectionRef = db.collection(uid);
-  const ongoingGoalRefs = await collectionRef
+  const querySnapshot = await collectionRef
     .where("type", "==", Goal.type)
+    .where("isClosed", "==", false)
     .get();
-  ongoingGoalRefs.forEach((goalRef) => {
-    console.log(goalRef.id, " => ", goalRef.data());
+  const goalPromises: Promise<Goal>[] = [];
+  querySnapshot.forEach((doc) => {
+    goalPromises.push(Goal.createFromGoalData(doc.id, doc.data() as GoalData));
   });
-  // TODO
+  return Promise.all(goalPromises);
 };
 
 export { firebaseApp, fetchOngoingGoals };
