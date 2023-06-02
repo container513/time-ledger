@@ -1,0 +1,25 @@
+#schedule-view {
+  border-radius: 10px;
+  margin: 5px 5px;
+  background-color: #93BFCF;
+}
+#schedule-header {
+  font-size: 0.5rem;
+}
+#schedule-header-goal {
+  font-size: 0.5rem;
+  font-weight: bold;
+  color: #585757;
+}
+#schedule-header-subgoal {
+  font-size: 0.5rem;
+  opacity: 0.8;
+}
+#schedule-body {
+  padding: 10px 0;
+}
+#schedule-title {
+  font-size: 1rem;
+  color: #1C3144;
+  font-weight: bold;
+}
