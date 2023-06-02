@@ -62,7 +62,7 @@ class Schedule {
 
   getDuration = (): Duration | undefined => {
     if (!this.startTime || !this.endTime) return undefined;
-    return moment.duration(this.endTime!.diff(this.startTime));
+    return moment.duration(this.endTime.diff(this.startTime));
   };
 }
 

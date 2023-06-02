@@ -6,9 +6,9 @@ import moment, { Moment, Duration } from "moment";
 import Subgoal from "./subgoal";
 import Task from "./task";
 import { docRefsToSubgoals, docRefsToTasks } from "./utils";
-import Schedule from "./schedule";
+import { ReviewStats, Reviewable } from "./reviewStats";
 
-class Goal {
+class Goal implements Reviewable {
   static readonly type: string = "goal";
   id: string;
   name: string;
@@ -55,37 +55,34 @@ class Goal {
     return newGoal;
   }
 
-  toGoalReviewVO = (): GoalReviewVO => {
-    const subgoalTasks = this.subgoals.map((subgoal) => subgoal.tasks).flat();
-    const tasks = subgoalTasks.concat(this.tasks);
-    const schedulesWithTime = tasks
-      .map((task) => task.schedules)
-      .flat()
-      .filter((schedule) => schedule.startTime && schedule.endTime);
-
-    const result: GoalReviewVO = {
-      id: this.id,
-      name: this.name,
-      actualEffort: moment.duration(0),
-      period: moment.duration(0),
-      endDate: undefined,
-    };
-    if (schedulesWithTime.length > 0) {
-      result.actualEffort = schedulesWithTime.reduce(
-        (acc: Duration, schedule: Schedule) => {
-          return acc.add(schedule.getDuration());
+  getReviewStats = (): ReviewStats => {
+    const revStats = new ReviewStats(this);
+    if (this.subgoals.length > 0) {
+      revStats.actualEffort = this.subgoals.reduce(
+        (acc: Duration, subgoal: Subgoal) => {
+          return acc.add(subgoal.getReviewStats().actualEffort);
         },
         moment.duration(0)
       );
-      const startDate = moment.min(
-        schedulesWithTime.map((schedule) => schedule.startTime!)
+      revStats.startDate = moment.min(
+        this.subgoals.map((subgoal) => subgoal.getReviewStats().startDate!)
       );
-      result.endDate = moment.max(
-        schedulesWithTime.map((schedule) => schedule.endTime!)
+      revStats.endDate = moment.max(
+        this.subgoals.map((subgoal) => subgoal.getReviewStats().endDate!)
       );
-      result.period = moment.duration(result.endDate.diff(startDate));
     }
-    return result;
+    if (this.tasks.length > 0) {
+      revStats.actualEffort = this.tasks.reduce((acc: Duration, task: Task) => {
+        return acc.add(task.getReviewStats().actualEffort);
+      }, moment.duration(0));
+      revStats.startDate = moment.min(
+        this.tasks.map((task) => task.getReviewStats().startDate!)
+      );
+      revStats.endDate = moment.max(
+        this.tasks.map((task) => task.getReviewStats().endDate!)
+      );
+    }
+    return revStats;
   };
 }
 
@@ -96,14 +93,6 @@ interface GoalData {
   tasks: firebase.firestore.DocumentReference[];
   deadline: firebase.firestore.Timestamp;
   isClosed: boolean;
-}
-
-interface GoalReviewVO {
-  id: string;
-  name: string;
-  actualEffort: Duration;
-  period: Duration;
-  endDate: Moment | undefined;
 }
 
 export default Goal;
