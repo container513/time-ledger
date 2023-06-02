@@ -39,7 +39,7 @@ class Goal implements Reviewable {
   ): Promise<Goal> {
     const newGoal = new Goal(
       goalData.name,
-      moment(goalData.deadline),
+      moment(goalData.deadline.toMillis()),
       [],
       [],
       goalData.isClosed,

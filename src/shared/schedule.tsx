@@ -44,16 +44,16 @@ class Schedule {
     const startTime =
       scheduleData.startTime === undefined
         ? undefined
-        : moment(scheduleData.startTime);
+        : moment(scheduleData.startTime.toMillis());
     const endTime =
       scheduleData.endTime === undefined
         ? undefined
-        : moment(scheduleData.endTime);
+        : moment(scheduleData.endTime.toMillis());
     return new Schedule(
       goal,
       subgoal,
       task,
-      moment(scheduleData.date),
+      moment(scheduleData.date.toMillis()),
       startTime,
       endTime,
       id

@@ -40,7 +40,7 @@ class Subgoal implements Reviewable {
     const newSubgoal = new Subgoal(
       subgoalData.name,
       goal,
-      moment(subgoalData.deadline),
+      moment(subgoalData.deadline.toMillis()),
       [],
       subgoalData.isClosed,
       id

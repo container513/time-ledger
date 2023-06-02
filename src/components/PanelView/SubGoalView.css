@@ -1,6 +1,5 @@
 .panel-subgoal {
   display: flex;
-  align-items: center;
   margin-bottom: 10px; 
 }
 
@@ -8,8 +7,6 @@
   display: inline-block;
   width: 17px;
   height:17px;
-  position: relative;
-  left: 30px;
   margin-right: 15px;
   /* transition: transform 0.5s;
   -webkit-transition: -webkit-transform 0.5s;
@@ -28,8 +25,6 @@
 
 .panel-subgoal-title{
   font-size: 18px;
-  position: relative;
-  left: 30px;
   color: white;
 }
 
@@ -39,11 +34,7 @@
   margin-left: auto;
 }
 
-.panel-goal-child{
-  position: relative;
-  left: 30px;
-}
 
 .panel-subgoal-child{
-  margin-left: 60px;
+  margin-left: 30px;
 }

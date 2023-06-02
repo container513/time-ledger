@@ -1,6 +1,5 @@
 .panel-goal {
   display: flex;
-  align-items: center;
   width: 100%;
   margin-bottom: 10px;
 }
@@ -36,6 +35,5 @@
 }
 
 .panel-goal-child {
-  position: relative;
-  left: 0px;
+  margin-left: 30px;
 }
