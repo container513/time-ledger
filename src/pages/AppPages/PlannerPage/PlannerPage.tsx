@@ -9,7 +9,6 @@ import Task from "../../../shared/task";
 import "./PlannerPage.css";
 
 const PlannerPage = () => {
-  // let week: Array<Array<Schedule>> = new Array<Array<Schedule>>(7);
   const goal0 = new Goal("NLP Paper Survey", moment());
   const task1 = new Task("Read paper", goal0);
   const task2 = new Task("Write Proposal", goal0);
