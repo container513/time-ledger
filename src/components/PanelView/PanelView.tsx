@@ -1,5 +1,4 @@
 import { AiOutlineSchedule, AiOutlineLogout } from "react-icons/ai";
-// import
 import Goal from "../../shared/goal";
 import SubGoal from "../../shared/subgoal";
 import Task from "../../shared/task";

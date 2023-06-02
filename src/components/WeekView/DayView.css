@@ -1,0 +1,12 @@
+.planner-day-view{
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  min-width: 100px;
+
+  border-left: 1px solid #A4A4A4;
+}
+.day-of-week{
+  color: #585757;
+  font-size: 1.5rem;
+}

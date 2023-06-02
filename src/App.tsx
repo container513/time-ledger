@@ -9,6 +9,7 @@ import {
   CtrlCtxStateDefaultVal,
 } from "./shared/controlContext";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css";
 
 const Index = () => {
@@ -41,8 +42,7 @@ class App extends Component {
           <Routes>
             <Route path={routes.index} element={<Index />} />
             <Route path={routes.login} element={<LoginPage />} />
-            <Route path={routes.planner} element={<AppPages />} />
-            <Route path={routes.review} element={<AppPages />} />
+            <Route path={routes.appPage} element={<AppPages />} />
           </Routes>
         </div>
       </ControlContext.Provider>
