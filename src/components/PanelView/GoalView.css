@@ -1,11 +1,13 @@
 .panel-goal {
   display: flex;
+  align-items: center;
   width: 100%;
   margin-bottom: 10px;
 }
 
 .panel-goal-narrow {
-  display: inline-block;
+  display: flex;
+  align-items: center;
   width: 17px;
   height: 17px;
   position: relative;

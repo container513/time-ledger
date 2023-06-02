@@ -1,7 +1,7 @@
 const routes = {
   index: "/",
   login: "/login",
-  planner: "/planner/*",
+  planner: "/planner",
   review: "/review",
   appPage: "/*",
 };

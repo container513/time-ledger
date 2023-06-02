@@ -1,26 +1,26 @@
-import { AiOutlineSchedule, AiOutlineLogout } from "react-icons/ai";
-// import moment from "moment";
-
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  AiOutlineSchedule,
+  AiOutlineLogout,
+  AiOutlineDashboard,
+} from "react-icons/ai";
 
 import { ControlContext } from "../../shared/controlContext";
-// import Goal from "../../shared/goal";
-// import SubGoal from "../../shared/subgoal";
-// import Task from "../../shared/task";
 import GoalView from "./GoalView";
+import routes from "../../shared/routes";
 import "./PanelView.css";
 
 const PanelView = () => {
-  const { state } = useContext(ControlContext)
-  // const goal0 = new Goal("NLP Paper Survey", moment());
-  // const task1 = new Task("Read paper", goal0);
-  // const task2 = new Task("Write Proposal", goal0);
-  // const subgoal1 = new SubGoal("Proposal", goal0, moment(), [task1, task2]);
-  // const subgoal0 = new SubGoal("Implementation", goal0, moment());
-  // const goal1 = new Goal("NLP Paper Survey", moment(), [subgoal1, subgoal0]);
-  // const goal2 = new Goal("ML HW10", moment());
-  // const goals: Goal[] = [goal1, goal2];
+  const { state, setState } = useContext(ControlContext);
+  const [nav, setNav] = useState(false);
   const goals = state.ongoingGoals;
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    setState({ user: undefined, ongoingGoals: [] });
+    navigate(routes.login, { replace: true });
+  };
 
   return (
     <div className="panel">
@@ -32,13 +32,42 @@ const PanelView = () => {
         })}
       </div>
       <div className="user-interface">
-        <div className="user-photo"></div>
-        <div className="user-name">Shao-Yu Chu</div>
+        <div className="user-photo">
+          {state.user?.photoURL ? (
+            <img src={state.user.photoURL} alt="username" />
+          ) : (
+            <div></div>
+          )}
+        </div>
+        <div className="user-name">
+          {state.user ? state.user.name : "Shao-Yu Chu"}
+        </div>
+        {nav ? (
+          <button
+            className="panel-button"
+            onClick={() => {
+              setNav(!nav);
+              navigate(routes.planner);
+            }}
+          >
+            <AiOutlineSchedule className="planner-icon" />
+          </button>
+        ) : (
+          <button
+            className="panel-button"
+            onClick={() => {
+              setNav(!nav);
+              navigate(routes.review);
+            }}
+          >
+            <AiOutlineDashboard className="review-icon" />
+          </button>
+        )}
         <button className="panel-button">
-          <AiOutlineSchedule className="review-icon" />
-        </button>
-        <button className="panel-button">
-          <AiOutlineLogout className="logout-icon" />
+          <AiOutlineLogout
+            className="logout-icon"
+            onClick={() => handleLogout()}
+          />
         </button>
       </div>
     </div>
