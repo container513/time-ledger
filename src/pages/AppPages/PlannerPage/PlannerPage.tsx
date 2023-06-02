@@ -1,4 +1,6 @@
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import moment from "moment";
+
 import WeekView from "../../../components/WeekView/WeekView";
 import Schedule from "../../../shared/schedule";
 import Goal from "../../../shared/goal";
@@ -8,14 +10,14 @@ import "./PlannerPage.css";
 
 const PlannerPage = () => {
   // let week: Array<Array<Schedule>> = new Array<Array<Schedule>>(7);
-  const goal0 = new Goal("NLP Paper Survey", new Date());
+  const goal0 = new Goal("NLP Paper Survey", moment());
   const task1 = new Task("Read paper", goal0);
   const task2 = new Task("Write Proposal", goal0);
-  const subgoal1 = new SubGoal("Proposal", goal0, new Date(), [task1, task2]);
-  const subgoal0 = new SubGoal("Implementation", goal0, new Date());
-  const goal1 = new Goal("NLP Paper Survey", new Date(), [subgoal1, subgoal0]);
-  const schedule1: Schedule = new Schedule(goal1, subgoal1, task1, new Date(), new Date(), new Date());
-  const schedule2: Schedule = new Schedule(goal1, subgoal1, task2, new Date(), new Date(), new Date());
+  const subgoal1 = new SubGoal("Proposal", goal0, moment(), [task1, task2]);
+  const subgoal0 = new SubGoal("Implementation", goal0, moment());
+  const goal1 = new Goal("NLP Paper Survey", moment(), [subgoal1, subgoal0]);
+  const schedule1: Schedule = new Schedule(goal1, subgoal1, task1, moment(), moment(), moment());
+  const schedule2: Schedule = new Schedule(goal1, subgoal1, task2, moment(), moment(), moment());
   
   const week: Schedule[][] = [[schedule1, schedule2], [schedule1], [schedule1], [schedule1], [], [], []];
 

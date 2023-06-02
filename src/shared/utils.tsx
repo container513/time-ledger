@@ -12,6 +12,7 @@ export interface User {
 }
 
 export const dateFormatStr = "YYYY.MM.DD";
+export const timeFormatStr = "HH:mm";
 
 export const docRefsToSubgoals = async (
   goal: Goal,
