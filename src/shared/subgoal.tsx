@@ -1,12 +1,13 @@
 import { v4 as uuid } from "uuid";
 import firebase from "firebase/compat/app";
-import moment, { Moment } from "moment";
+import moment, { Moment, Duration } from "moment";
 
 import Task from "./task";
 import Goal from "./goal";
 import { docRefsToTasks } from "./utils";
+import { ReviewStats, Reviewable } from "./reviewStats";
 
-class Subgoal {
+class Subgoal implements Reviewable {
   static readonly type: string = "subgoal";
   id: string;
   goal: Goal;
@@ -47,6 +48,22 @@ class Subgoal {
     newSubgoal.tasks = await docRefsToTasks(newSubgoal, subgoalData.tasks);
     return newSubgoal;
   }
+
+  getReviewStats = (): ReviewStats => {
+    const revStats = new ReviewStats(this);
+    if (this.tasks.length > 0) {
+      revStats.actualEffort = this.tasks.reduce((acc: Duration, task: Task) => {
+        return acc.add(task.getReviewStats().actualEffort);
+      }, moment.duration(0));
+      revStats.startDate = moment.min(
+        this.tasks.map((task) => task.getReviewStats().startDate!)
+      );
+      revStats.endDate = moment.max(
+        this.tasks.map((task) => task.getReviewStats().endDate!)
+      );
+    }
+    return revStats;
+  };
 }
 
 interface SubgoalData {

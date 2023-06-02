@@ -1,12 +1,14 @@
 import { v4 as uuid } from "uuid";
 import firebase from "firebase/compat/app";
+import moment, { Duration } from "moment";
 
 import Schedule from "./schedule";
 import Subgoal from "./subgoal";
 import Goal from "./goal";
 import { docRefsToSchedule } from "./utils";
+import { ReviewStats, Reviewable } from "./reviewStats";
 
-class Task {
+class Task implements Reviewable {
   static readonly type: string = "task";
   id: string;
   parent: Subgoal | Goal;
@@ -44,6 +46,26 @@ class Task {
     );
     return newTask;
   }
+
+  getReviewStats = (): ReviewStats => {
+    const closedSchds = this.schedules.filter(
+      (schd) => schd.startTime && schd.endTime && schd.endTime < moment()
+    );
+    const revStats = new ReviewStats(this);
+    if (closedSchds.length > 0) {
+      revStats.actualEffort = closedSchds.reduce(
+        (acc: Duration, schd: Schedule) => {
+          return acc.add(schd.getDuration());
+        },
+        moment.duration(0)
+      );
+      revStats.startDate = moment.min(
+        closedSchds.map((schd) => schd.startTime!)
+      );
+      revStats.endDate = moment.max(closedSchds.map((schd) => schd.endTime!));
+    }
+    return revStats;
+  };
 }
 
 interface TaskData {
