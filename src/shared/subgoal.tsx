@@ -1,5 +1,6 @@
 import { v4 as uuid } from "uuid";
 import firebase from "firebase/compat/app";
+import moment, { Moment } from "moment";
 
 import Task from "./task";
 import Goal from "./goal";
@@ -11,13 +12,13 @@ class Subgoal {
   goal: Goal;
   name: string;
   tasks: Task[];
-  deadline: Date;
+  deadline: Moment;
   isClosed: boolean;
 
   constructor(
     name: string,
     goal: Goal,
-    deadline: Date,
+    deadline: Moment,
     tasks: Task[] = [],
     isClosed: boolean = false,
     id?: string
@@ -38,7 +39,7 @@ class Subgoal {
     const newSubgoal = new Subgoal(
       subgoalData.name,
       goal,
-      subgoalData.deadline.toDate(),
+      moment(subgoalData.deadline),
       [],
       subgoalData.isClosed,
       id

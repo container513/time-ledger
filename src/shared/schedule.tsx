@@ -1,10 +1,10 @@
 import { v4 as uuid } from "uuid";
 import firebase from "firebase/compat/app";
+import moment, { Moment } from "moment";
 
 import Goal from "./goal";
 import Subgoal from "./subgoal";
 import Task from "./task";
-import { timestampToDate } from "./utils";
 
 class Schedule {
   static readonly type: string = "schedule";
@@ -12,17 +12,17 @@ class Schedule {
   goal: Goal;
   subgoal: Subgoal | undefined;
   task: Task;
-  date: Date;
-  startTime: Date | undefined;
-  endTime: Date | undefined;
+  date: Moment;
+  startTime: Moment | undefined;
+  endTime: Moment | undefined;
 
   constructor(
     goal: Goal,
     subgoal: Subgoal | undefined,
     task: Task,
-    date: Date,
-    startTime: Date | undefined = undefined,
-    endTime: Date | undefined = undefined,
+    date: Moment,
+    startTime: Moment | undefined = undefined,
+    endTime: Moment | undefined = undefined,
     id?: string
   ) {
     this.id = id !== undefined ? id : uuid();
@@ -41,13 +41,21 @@ class Schedule {
     task: Task,
     scheduleData: ScheduleData
   ) {
+    const startTime =
+      scheduleData.startTime === undefined
+        ? undefined
+        : moment(scheduleData.startTime);
+    const endTime =
+      scheduleData.endTime === undefined
+        ? undefined
+        : moment(scheduleData.endTime);
     return new Schedule(
       goal,
       subgoal,
       task,
-      scheduleData.date.toDate(),
-      timestampToDate(scheduleData.startTime),
-      timestampToDate(scheduleData.endTime),
+      moment(scheduleData.date),
+      startTime,
+      endTime,
       id
     );
   }

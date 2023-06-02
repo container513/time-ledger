@@ -1,4 +1,5 @@
 import firebase from "firebase/compat/app";
+import { Moment } from "moment";
 
 import Task, { TaskData } from "./task";
 import Subgoal, { SubgoalData } from "./subgoal";
@@ -11,21 +12,8 @@ export interface User {
   photoURL: string | null;
 }
 
-export const timestampToDate = (
-  timestamp: firebase.firestore.Timestamp | undefined
-) => {
-  return timestamp === undefined ? undefined : timestamp.toDate();
-};
-
-export const dateToString = (date: Date) => {
-  const format = {
-    minimumIntegerDigits: 2,
-    useGrouping: false,
-  };
-  var year = date.getFullYear();
-  var month = (date.getMonth() + 1).toLocaleString("en-US", format);
-  var day = date.getDate().toLocaleString("en-US", format);
-  return `${year}.${month}.${day}`;
+export const dateToString = (momentObj: Moment): string => {
+  return momentObj.format("YYYY.MM.DD");
 };
 
 export const docRefsToSubgoals = async (

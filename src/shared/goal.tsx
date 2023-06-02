@@ -1,6 +1,7 @@
 import { v4 as uuid } from "uuid";
 import firebase from "firebase/compat/app";
 import _ from "lodash";
+import moment, { Moment } from "moment";
 
 import Subgoal from "./subgoal";
 import Task from "./task";
@@ -12,12 +13,12 @@ class Goal {
   name: string;
   subgoals: Subgoal[];
   tasks: Task[];
-  deadline: Date;
+  deadline: Moment;
   isClosed: boolean;
 
   constructor(
     name: string,
-    deadline: Date,
+    deadline: Moment,
     subgoals: Subgoal[] = [],
     tasks: Task[] = [],
     isClosed: boolean = false,
@@ -37,7 +38,7 @@ class Goal {
   ): Promise<Goal> {
     const newGoal = new Goal(
       goalData.name,
-      goalData.deadline.toDate(),
+      moment(goalData.deadline),
       [],
       [],
       goalData.isClosed,
