@@ -1,42 +1,56 @@
+.panel-subgoal-toggle {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
 .panel-subgoal {
   display: flex;
   align-items: center;
-  margin-bottom: 10px; 
+  width: 100%;
 }
 
-.panel-subgoal-narrow{
+.panel-subgoal-narrow {
   display: flex;
   align-items: center;
   width: 17px;
-  height:17px;
+  height: 17px;
   margin-right: 15px;
-  /* transition: transform 0.5s;
-  -webkit-transition: -webkit-transform 0.5s;
-  -o-transition: -o-transform 0.5s; */
 }
 
-.panel-subgoal-narrow-right{
+.panel-subgoal-narrow-right {
   height: 100%;
   width: auto;
 }
 
-.panel-subgoal-narrow-down{
+.panel-subgoal-narrow-down {
   width: 100%;
   height: auto;
 }
 
-.panel-subgoal-title{
+.panel-subgoal-title {
   font-size: 18px;
   color: white;
 }
 
-.panel-subgoal-date{
+.panel-subgoal-date {
   font-size: 14px;
-  color: #BDCDD6;
+  color: #bdcdd6;
   margin-left: auto;
 }
 
+.panel-subgoal-add {
+  margin-left: 8px;
+  display: flex;
+  width: 27px;
+  cursor: pointer;
+}
 
-.panel-subgoal-child{
+.panel-subgoal-add:hover {
+  transform:scale(1.1);
+  transition: 0.1s ease;
+}
+
+.panel-subgoal-child {
   margin-left: 30px;
 }

@@ -1,8 +1,13 @@
+.panel-goal-toggle {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
 .panel-goal {
   display: flex;
   align-items: center;
   width: 100%;
-  margin-bottom: 10px;
 }
 
 .panel-goal-narrow {
@@ -34,6 +39,24 @@
   font-size: 14px;
   color: #bdcdd6;
   margin-left: auto;
+}
+
+.panel-goal-add {
+  margin-left: 8px;
+  display: flex;
+  width: 27px;
+  cursor: pointer;
+}
+
+.panel-goal-add:hover {
+  transform:scale(1.1);
+  transition: 0.1s ease;
+}
+
+.add-icon {
+  width: 100%;
+  height: 100%;
+  color: white;
 }
 
 .panel-goal-child {
