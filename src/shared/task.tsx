@@ -79,5 +79,13 @@ interface TaskData {
   isClosed: boolean;
 }
 
+interface TaskForm {
+  name: "text" | "checkbox";
+}
+
+export const taskForm: TaskForm = {
+  name: "text",
+};
+
 export default Task;
-export type { TaskData };
+export type { TaskData, TaskForm };

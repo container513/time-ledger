@@ -78,5 +78,15 @@ interface GoalData {
   isClosed: boolean;
 }
 
+interface GoalForm {
+  name: "text" | "checkbox";
+  deadline: "text" | "checkbox";
+}
+
+export const goalForm: GoalForm = {
+  name: "text",
+  deadline: "text",
+};
+
 export default Goal;
-export type { GoalData };
+export type { GoalData, GoalForm };
