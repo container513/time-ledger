@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { ControlContext } from "../../shared/controlContext";
+import { Table } from "reactstrap";
 
 import "./ReviewGoalsView.css";
 import { ReviewView } from "./ReviewView";
@@ -10,9 +11,23 @@ const ReviewGoalsView = () => {
   const goals = state.ongoingGoals;
   return (
     <div>
-      {Object.values(goals).map((goal: Goal, index) => (
-        <ReviewView key={index} reviewStat={goal.getReviewStats()} />
-      ))}
+      <Table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Actual Effort</th>
+            <th>Period</th>
+            <th>End Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.values(goals).map((goal: Goal, index) => {
+            return (
+              <ReviewView key={index} reviewStat={goal.getReviewStats()} />
+            );
+          })}
+        </tbody>
+      </Table>
     </div>
   );
 };
