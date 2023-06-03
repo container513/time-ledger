@@ -1,0 +1,28 @@
+.modal-nav-bar {
+  overflow: hidden;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.modal-nav-item {
+  width: 100%;
+  transition: 0.3s;
+  cursor: pointer;
+  text-align: center;
+  color: #aaa;
+  border-right: 3px solid rgba(156, 144, 144, 0.7);
+}
+
+.modal-nav-item.selected {
+  color: black;
+}
+
+.modal-nav-item.last{
+  border-right: none;
+}
+
+.modal-nav-item:hover {
+  color: black;
+}

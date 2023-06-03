@@ -4,7 +4,7 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import SubGoal from "../../shared/subgoal";
 import Task, { taskForm } from "../../shared/task";
 import TaskView from "./TaskView";
-import ModalTemplate from "./ModalTemplate";
+import ModalTemplate, { ModalFormProps } from "../ModalTemplate/ModalTemplate";
 import NarrowRight from "../../assets/images/narrow-right.png";
 import NarrowDown from "../../assets/images/narrow-down.png";
 import { ControlContext } from "../../shared/controlContext";
@@ -23,6 +23,21 @@ const SubGoalView = (subgoal: SubGoal) => {
   const [visible, setVisible] = useState<VisibilityState>({
     visibility: "hidden",
   });
+  const modals: ModalFormProps[] = [
+    {
+      handleSubmit: () => {
+        const task = Task.createFromFormResult(state.formResult, subgoal);
+        const newOngoingGoals = { ...state.ongoingGoals };
+        newOngoingGoals[subgoal.goal.id].subgoals[subgoal.id].tasks[task.id] =
+          task;
+        setState({ ongoingGoals: newOngoingGoals });
+        setState({ formResult: {} });
+        setShowModal(false);
+      },
+      data: taskForm,
+      title: "Task",
+    },
+  ];
 
   return (
     <div>
@@ -71,21 +86,9 @@ const SubGoalView = (subgoal: SubGoal) => {
           })}
       </div>
       <ModalTemplate
+        modals={modals}
         show={showModal}
-        handleClose={() => {
-          setShowModal(false);
-        }}
-        handleSubmit={() => {
-          const task = Task.createFromFormResult(state.formResult, subgoal);
-          const newOngoingGoals = { ...state.ongoingGoals };
-          newOngoingGoals[subgoal.goal.id].subgoals[subgoal.id].tasks[task.id] =
-            task;
-          setState({ ongoingGoals: newOngoingGoals });
-          setState({ formResult: {} });
-          setShowModal(false);
-        }}
-        data={taskForm}
-        title="Add New Task"
+        handleClose={() => setShowModal(false)}
       />
     </div>
   );

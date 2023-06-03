@@ -3,13 +3,14 @@ import Form from "react-bootstrap/Form";
 import { Row, Col } from "react-bootstrap";
 
 import { ControlContext } from "../../shared/controlContext";
+import { capitalizeFirstLetter } from "../../shared/utils";
 
-interface FormViewProps {
+interface FieldViewProps {
   fieldName: string;
   type: string;
 }
 
-const FieldView = ({ fieldName, type }: FormViewProps) => {
+const FieldView = ({ fieldName, type }: FieldViewProps) => {
   const { state, setState } = useContext(ControlContext);
 
   const [value, setValue] = useState<string>("");
@@ -23,10 +24,10 @@ const FieldView = ({ fieldName, type }: FormViewProps) => {
   return (
     <Form.Group as={Row} className="mb-3" controlId={fieldName}>
       <Form.Label column sm="2">
-        {fieldName}
+        {capitalizeFirstLetter(fieldName)}
       </Form.Label>
       <Col sm="10">
-        <Form.Control type={type} onChange={handleChange} value={value}   />
+        <Form.Control type={type} onChange={handleChange} value={value} />
       </Col>
     </Form.Group>
   );
