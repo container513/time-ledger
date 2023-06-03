@@ -24,7 +24,6 @@ const ModalTemplate = ({
   data,
   title,
 }: ModalTemplateProps) => {
-  const { state, setState } = useContext(ControlContext);
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>

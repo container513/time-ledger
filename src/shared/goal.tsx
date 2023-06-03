@@ -71,10 +71,12 @@ class Goal implements Reviewable {
     return ReviewStats.aggregateReviewStats(this, childRevStats);
   };
 
-  static createFromFormResult = (formResult: { [key: string]: string }): Goal => {
+  static createFromFormResult = (formResult: {
+    [key: string]: string | boolean;
+  }): Goal => {
     return new Goal(
-      formResult["name"],
-      moment(formResult["deadline"]),
+      formResult["name"] as string,
+      moment(formResult["deadline"] as string),
       {},
       {},
       false
