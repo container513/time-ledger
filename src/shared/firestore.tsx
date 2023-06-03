@@ -84,7 +84,7 @@ const fetchScheduleOfDate = async (
       type: string;
       [key: string]: any;
     };
-    if (taskParent.type == Subgoal.type) {
+    if (taskParent.type === Subgoal.type) {
       // subgoal exists
       sgData = taskParent as SubgoalData;
       sgId = taskParentId;
