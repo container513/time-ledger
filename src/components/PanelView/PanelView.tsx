@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { IoAddCircleOutline } from "react-icons/io5";
 import {
   AiOutlineSchedule,
   AiOutlineLogout,
@@ -7,12 +8,15 @@ import {
 } from "react-icons/ai";
 
 import { ControlContext } from "../../shared/controlContext";
+import ModalTemplate from "./ModalTemplate";
+import Goal, { goalForm } from "../../shared/goal";
 import GoalView from "./GoalView";
 import routes from "../../shared/routes";
 import "./PanelView.css";
 
 const PanelView = () => {
   const { state, setState } = useContext(ControlContext);
+  const [showModal, setShowModal] = useState(false);
   const [nav, setNav] = useState(false);
   const goals = state.ongoingGoals;
   const navigate = useNavigate();
@@ -25,7 +29,13 @@ const PanelView = () => {
   return (
     <div className="panel">
       <div className="panel-logo">TimeLedger</div>
-      <div className="panel-title">GOALS</div>
+      <div className="panel-title-group">
+        <div className="panel-title">GOALS</div>
+        <div className="panel-title-add" onClick={() => setShowModal(true)}>
+          <IoAddCircleOutline className="add-icon" />
+        </div>
+      </div>
+
       <div className="panel-goals">
         {Object.values(goals).map((goal, index) => {
           return <GoalView key={index} {...goal} />;
@@ -70,6 +80,22 @@ const PanelView = () => {
           />
         </button>
       </div>
+      <ModalTemplate
+        show={showModal}
+        handleClose={() => {
+          setShowModal(false);
+        }}
+        handleSubmit={() => {
+          const goal = Goal.createFromFormResult(state.formResult);
+          const newOngoingGoals = { ...state.ongoingGoals };
+          newOngoingGoals[goal.id] = goal;
+          setState({ ongoingGoals: newOngoingGoals });
+          setState({ formResult: {} });
+          setShowModal(false);
+        }}
+        data={goalForm}
+        title="Add New Goal"
+      />
     </div>
   );
 };

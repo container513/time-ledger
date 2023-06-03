@@ -61,6 +61,19 @@ class Subgoal implements Reviewable {
     );
     return ReviewStats.aggregateReviewStats(this, taskRevStats);
   };
+
+  static createFromFormResult = (
+    formResult: { [key: string]: string | boolean },
+    goal: Goal
+  ): Subgoal => {
+    return new Subgoal(
+      formResult["name"] as string,
+      goal,
+      moment(formResult["deadline"] as string),
+      {},
+      false
+    );
+  };
 }
 
 interface SubgoalData {
