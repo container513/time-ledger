@@ -34,7 +34,7 @@ class Task implements Reviewable {
     id: string,
     parent: Goal | Subgoal,
     taskData: TaskData,
-    retrieveChildren = false
+    retrieveChildren = true
   ): Promise<Task> {
     const subgoal = parent instanceof Subgoal ? parent : undefined;
     const goal = parent instanceof Goal ? parent : subgoal!.goal;
