@@ -3,6 +3,7 @@ import moment, { Moment, Duration } from "moment";
 interface Reviewable {
   id: string;
   name: string;
+  isClosed: boolean;
   getReviewStats: () => ReviewStats;
 }
 
@@ -12,12 +13,14 @@ class ReviewStats {
   actualEffort: Duration;
   startDate: Moment | undefined;
   endDate: Moment | undefined;
+  isClosed: boolean;
   constructor(reviewable: Reviewable) {
     this.id = reviewable.id;
     this.name = reviewable.name;
     this.actualEffort = moment.duration(0);
     this.startDate = undefined;
     this.endDate = undefined;
+    this.isClosed = reviewable.isClosed;
   }
   static aggregateReviewStats(
     reviewable: Reviewable,
