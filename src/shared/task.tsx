@@ -33,7 +33,8 @@ class Task implements Reviewable {
   static async createFromTaskData(
     id: string,
     parent: Goal | Subgoal,
-    taskData: TaskData
+    taskData: TaskData,
+    retrieveChildren = false
   ): Promise<Task> {
     const subgoal = parent instanceof Subgoal ? parent : undefined;
     const goal = parent instanceof Goal ? parent : subgoal!.goal;
@@ -44,9 +45,11 @@ class Task implements Reviewable {
       newTask,
       taskData.schedules
     );
-    newTask.schedules = Object.fromEntries(
-      schedules.map((schd) => [schd.id, schd])
-    );
+    if (retrieveChildren) {
+      newTask.schedules = Object.fromEntries(
+        schedules.map((schd) => [schd.id, schd])
+      );
+    }
     return newTask;
   }
 

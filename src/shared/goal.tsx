@@ -35,7 +35,8 @@ class Goal implements Reviewable {
 
   static async createFromGoalData(
     id: string,
-    goalData: GoalData
+    goalData: GoalData,
+    retrieveChildren = true
   ): Promise<Goal> {
     const newGoal = new Goal(
       goalData.name,
@@ -45,15 +46,17 @@ class Goal implements Reviewable {
       goalData.isClosed,
       id
     );
-    const subgoals = _.sortBy(
-      await docRefsToSubgoals(newGoal, goalData.subgoals),
-      ["deadline"]
-    );
-    newGoal.subgoals = Object.fromEntries(
-      subgoals.map((subgoal) => [subgoal.id, subgoal])
-    );
-    const tasks = await docRefsToTasks(newGoal, goalData.tasks);
-    newGoal.tasks = Object.fromEntries(tasks.map((task) => [task.id, task]));
+    if (retrieveChildren) {
+      const subgoals = _.sortBy(
+        await docRefsToSubgoals(newGoal, goalData.subgoals),
+        ["deadline"]
+      );
+      newGoal.subgoals = Object.fromEntries(
+        subgoals.map((subgoal) => [subgoal.id, subgoal])
+      );
+      const tasks = await docRefsToTasks(newGoal, goalData.tasks);
+      newGoal.tasks = Object.fromEntries(tasks.map((task) => [task.id, task]));
+    }
     return newGoal;
   }
 

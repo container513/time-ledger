@@ -1,9 +1,11 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
-import { Moment } from "moment";
+import moment, { Moment } from "moment";
 
 import Goal, { GoalData } from "./goal";
-import Schedule from "./schedule";
+import Subgoal, { SubgoalData } from "./subgoal";
+import Task, { TaskData } from "./task";
+import Schedule, { ScheduleData } from "./schedule";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIRESTORE_KEY,
@@ -52,7 +54,11 @@ const fetchGoalReviewStats = async (uid: string) => {
   return goals.map((goal) => goal.getReviewStats());
 };
 
-const fetchScheduleOfDate = async (uid: string, date: Moment) => {
+const fetchScheduleOfDate = async (
+  uid: string,
+  date: Moment,
+  ongoingGoals: { [key: string]: Goal }
+) => {
   const collectionRef = db.collection(uid);
   const startOfDate = date.clone().startOf("d"); // requires clone() since startOf() is not in-place
   const endOfDate = date.clone().endOf("d");
@@ -62,9 +68,56 @@ const fetchScheduleOfDate = async (uid: string, date: Moment) => {
     .where("date", "<=", endOfDate.toDate())
     .get();
 
-  querySnapshot.forEach((doc) => {
-    // TODO: create schedule objects based on doc.id and doc.data()
+  const schedules: Schedule[] = [];
+  querySnapshot.forEach(async (doc) => {
+    const schdData = doc.data() as ScheduleData;
+    const goalId = schdData.goal.id;
+    const sgId = schdData.subgoal?.id;
+    const taskId = schdData.task.id;
+    let goal: Goal, sg: Subgoal | undefined, task: Task;
+    if (goalId in ongoingGoals) {
+      // the schedule belongs to an ongoing goal
+      // point goal, subgoal, and task to that in the control context
+      goal = ongoingGoals[goalId];
+      if (sgId !== undefined) {
+        sg = goal.subgoals[sgId!];
+        task = sg!.tasks[taskId];
+      } else {
+        sg = undefined;
+        task = goal.tasks[taskId];
+      }
+    } else {
+      // the schedule belongs to a closed goal
+      // create a dummy goal, subgoal, task
+      const goalData = (await schdData.goal.get()).data() as GoalData;
+      const sgData = (await schdData.subgoal?.get())?.data() as SubgoalData;
+      const taskData = (await schdData.task.get()).data() as TaskData;
+      goal = await Goal.createFromGoalData(goalId, goalData, false);
+      if (sgId !== undefined) {
+        sg = await Subgoal.createFromSubgoalData(sgId, goal, sgData, false);
+        task = await Task.createFromTaskData(taskId, sg, taskData, false);
+      } else {
+        sg = undefined;
+        task = await Task.createFromTaskData(taskId, goal, taskData, false);
+      }
+    }
+
+    let startTime: Moment | undefined = undefined;
+    let endTime: Moment | undefined = undefined;
+    if (schdData.startTime) startTime = moment(schdData.startTime.toMillis());
+    if (schdData.endTime) endTime = moment(schdData.endTime.toMillis());
+    const newSchd = new Schedule(
+      goal,
+      sg,
+      task,
+      moment(schdData.date.toDate()),
+      startTime,
+      endTime,
+      doc.id
+    );
+    schedules.push(newSchd);
   });
+  return schedules;
 };
 
 export {
