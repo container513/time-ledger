@@ -69,8 +69,6 @@ class Schedule {
 interface ScheduleData {
   type: string;
   task: firebase.firestore.DocumentReference;
-  subgoal?: firebase.firestore.DocumentReference;
-  goal: firebase.firestore.DocumentReference;
   date: firebase.firestore.Timestamp;
   startTime?: firebase.firestore.Timestamp;
   endTime?: firebase.firestore.Timestamp;

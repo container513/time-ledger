@@ -71,13 +71,48 @@ const fetchScheduleOfDate = async (
   const schedules: Schedule[] = [];
   querySnapshot.forEach(async (doc) => {
     const schdData = doc.data() as ScheduleData;
-    const goalId = schdData.goal.id;
-    const sgId = schdData.subgoal?.id;
-    const taskId = schdData.task.id;
-    let goal: Goal, sg: Subgoal | undefined, task: Task;
+
+    // retreive taskData => subgoalData => goalData
+    let taskData: TaskData, sgData: SubgoalData | undefined, goalData: GoalData;
+    let taskId: string, sgId: string | undefined, goalId: string;
+    const taskDocRef = await schdData.task.get();
+    taskData = taskDocRef.data() as TaskData;
+    taskId = taskDocRef.id;
+    const taskParentDocRef = await taskData.parent.get();
+    const taskParentId = taskParentDocRef.id;
+    const taskParent = taskParentDocRef.data() as {
+      type: string;
+      [key: string]: any;
+    };
+    if (taskParent.type == Subgoal.type) {
+      // subgoal exists
+      sgData = taskParent as SubgoalData;
+      sgId = taskParentId;
+      const goalDocRef = await sgData.goal.get();
+      goalData = goalDocRef.data() as GoalData;
+      goalId = goalDocRef.id;
+    } else {
+      // subgoal does not exist
+      sgData = undefined;
+      sgId = undefined;
+      goalData = taskParent as GoalData;
+      goalId = taskParentId;
+    }
+
+    // retrieve goal => subgoal => task
+    // create dummy objects
+    let goal = await Goal.createFromGoalData(goalId, goalData, false);
+    let sg: Subgoal | undefined, task: Task;
+    if (sgData) {
+      sg = await Subgoal.createFromSubgoalData(sgId!, goal, sgData, false);
+      task = await Task.createFromTaskData(taskId, sg, taskData, false);
+    } else {
+      sg = undefined;
+      task = await Task.createFromTaskData(taskId, goal, taskData, false);
+    }
+
+    // if the schedule belongs to an ongoing goal, point goal/subgoal/task to that in the control context
     if (goalId in ongoingGoals) {
-      // the schedule belongs to an ongoing goal
-      // point goal, subgoal, and task to that in the control context
       goal = ongoingGoals[goalId];
       if (sgId !== undefined) {
         sg = goal.subgoals[sgId];
@@ -85,20 +120,6 @@ const fetchScheduleOfDate = async (
       } else {
         sg = undefined;
         task = goal.tasks[taskId];
-      }
-    } else {
-      // the schedule belongs to a closed goal
-      // create a dummy goal, subgoal, task
-      const goalData = (await schdData.goal.get()).data() as GoalData;
-      const sgData = (await schdData.subgoal?.get())?.data() as SubgoalData;
-      const taskData = (await schdData.task.get()).data() as TaskData;
-      goal = await Goal.createFromGoalData(goalId, goalData, false);
-      if (sgId !== undefined) {
-        sg = await Subgoal.createFromSubgoalData(sgId, goal, sgData, false);
-        task = await Task.createFromTaskData(taskId, sg, taskData, false);
-      } else {
-        sg = undefined;
-        task = await Task.createFromTaskData(taskId, goal, taskData, false);
       }
     }
 
