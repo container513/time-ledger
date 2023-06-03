@@ -47,7 +47,7 @@
 }
 
 .panel-subgoal-add:hover {
-  transform:scale(1.1);
+  transform: scale(1.1);
   transition: 0.1s ease;
 }
 

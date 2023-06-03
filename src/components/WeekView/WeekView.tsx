@@ -2,7 +2,7 @@ import DayView from "./DayView";
 import Schedule from "../../shared/schedule";
 import "./WeekView.css";
 
-const WeekView = ({week} :{week: Schedule[][]}) => {
+const WeekView = ({ week }: { week: Schedule[][] }) => {
   return (
     <div className="planner-week-view">
       {week.map((day, index) => {

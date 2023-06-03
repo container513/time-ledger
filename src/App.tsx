@@ -9,7 +9,7 @@ import {
   CtrlCtxStateDefaultVal,
 } from "./shared/controlContext";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 const Index = () => {

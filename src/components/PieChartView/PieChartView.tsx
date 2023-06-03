@@ -1,9 +1,5 @@
 const PieChartView = () => {
-  return (
-    <div>
-      PieChartView
-    </div>
-  )
-}
+  return <div>PieChartView</div>;
+};
 
 export default PieChartView;

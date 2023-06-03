@@ -1,7 +1,7 @@
 #schedule-view {
   border-radius: 10px;
   margin: 5px 5px;
-  background-color: #93BFCF;
+  background-color: #93bfcf;
 }
 #schedule-header {
   font-size: 0.5rem;
@@ -27,13 +27,13 @@
 }
 #schedule-title {
   font-size: 1.3rem;
-  color: #1C3144;
+  color: #1c3144;
   font-weight: bold;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-#schedule-text{
+#schedule-text {
   font-size: 0.9rem;
   color: #ffffff;
   white-space: nowrap;
