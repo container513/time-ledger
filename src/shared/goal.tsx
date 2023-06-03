@@ -12,16 +12,16 @@ class Goal implements Reviewable {
   static readonly type: string = "goal";
   id: string;
   name: string;
-  subgoals: Subgoal[];
-  tasks: Task[];
+  subgoals: { [key: string]: Subgoal };
+  tasks: { [key: string]: Task };
   deadline: Moment;
   isClosed: boolean;
 
   constructor(
     name: string,
     deadline: Moment,
-    subgoals: Subgoal[] = [],
-    tasks: Task[] = [],
+    subgoals: { [key: string]: Subgoal } = {},
+    tasks: { [key: string]: Task } = {},
     isClosed: boolean = false,
     id?: string
   ) {
@@ -40,8 +40,8 @@ class Goal implements Reviewable {
     const newGoal = new Goal(
       goalData.name,
       moment(goalData.deadline.toMillis()),
-      [],
-      [],
+      {},
+      {},
       goalData.isClosed,
       id
     );
@@ -49,17 +49,21 @@ class Goal implements Reviewable {
       await docRefsToSubgoals(newGoal, goalData.subgoals),
       ["deadline"]
     );
+    newGoal.subgoals = Object.fromEntries(
+      subgoals.map((subgoal) => [subgoal.id, subgoal])
+    );
     const tasks = await docRefsToTasks(newGoal, goalData.tasks);
-    newGoal.subgoals = subgoals;
-    newGoal.tasks = tasks;
+    newGoal.tasks = Object.fromEntries(tasks.map((task) => [task.id, task]));
     return newGoal;
   }
 
   getReviewStats = (): ReviewStats => {
-    const subgoalRevStats = this.subgoals.map((subgoal) =>
+    const subgoalRevStats = Object.values(this.subgoals).map((subgoal) =>
       subgoal.getReviewStats()
     );
-    const taskRevStats = this.tasks.map((task) => task.getReviewStats());
+    const taskRevStats = Object.values(this.tasks).map((task) =>
+      task.getReviewStats()
+    );
     const childRevStats = subgoalRevStats.concat(taskRevStats);
     return ReviewStats.aggregateReviewStats(this, childRevStats);
   };

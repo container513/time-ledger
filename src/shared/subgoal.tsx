@@ -12,7 +12,7 @@ class Subgoal implements Reviewable {
   id: string;
   goal: Goal;
   name: string;
-  tasks: Task[];
+  tasks: { [key: string]: Task };
   deadline: Moment;
   isClosed: boolean;
 
@@ -20,7 +20,7 @@ class Subgoal implements Reviewable {
     name: string,
     goal: Goal,
     deadline: Moment,
-    tasks: Task[] = [],
+    tasks: { [key: string]: Task } = {},
     isClosed: boolean = false,
     id?: string
   ) {
@@ -41,16 +41,19 @@ class Subgoal implements Reviewable {
       subgoalData.name,
       goal,
       moment(subgoalData.deadline.toMillis()),
-      [],
+      {},
       subgoalData.isClosed,
       id
     );
-    newSubgoal.tasks = await docRefsToTasks(newSubgoal, subgoalData.tasks);
+    const tasks = await docRefsToTasks(newSubgoal, subgoalData.tasks);
+    newSubgoal.tasks = Object.fromEntries(tasks.map((task) => [task.id, task]));
     return newSubgoal;
   }
 
   getReviewStats = (): ReviewStats => {
-    const taskRevStats = this.tasks.map((task) => task.getReviewStats());
+    const taskRevStats = Object.values(this.tasks).map((task) =>
+      task.getReviewStats()
+    );
     return ReviewStats.aggregateReviewStats(this, taskRevStats);
   };
 }

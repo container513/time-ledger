@@ -35,7 +35,8 @@ const fetchOngoingGoals = async (uid: string) => {
   querySnapshot.forEach((doc) => {
     goalPromises.push(Goal.createFromGoalData(doc.id, doc.data() as GoalData));
   });
-  return Promise.all(goalPromises);
+  const goals = await Promise.all(goalPromises);
+  return Object.fromEntries(goals.map((goal) => [goal.id, goal]));
 };
 
 const fetchGoalReviewStats = async (uid: string) => {

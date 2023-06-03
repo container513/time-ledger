@@ -65,7 +65,7 @@ const SubGoalView = (subgoal: SubGoal) => {
       </div>
       <div className="panel-subgoal-child">
         {toggle &&
-          subgoal.tasks.map((task, index) => {
+          Object.values(subgoal.tasks).map((task, index) => {
             return <TaskView key={index} {...task} />;
           })}
       </div>

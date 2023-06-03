@@ -18,7 +18,7 @@ const PanelView = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    setState({ user: undefined, ongoingGoals: [] });
+    setState({ user: undefined, ongoingGoals: {} });
     navigate(routes.login, { replace: true });
   };
 
@@ -27,7 +27,7 @@ const PanelView = () => {
       <div className="panel-logo">TimeLedger</div>
       <div className="panel-title">GOALS</div>
       <div className="panel-goals">
-        {goals.map((goal, index) => {
+        {Object.values(goals).map((goal, index) => {
           return <GoalView key={index} {...goal} />;
         })}
       </div>

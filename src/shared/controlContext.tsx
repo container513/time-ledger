@@ -8,7 +8,7 @@ import Goal from "./goal";
 type CtrlCtxState = {
   user: User | undefined;
   curTime: Moment;
-  ongoingGoals: Goal[];
+  ongoingGoals: { [key: string]: Goal };
 };
 
 type CtrlCtxType = {
@@ -17,7 +17,11 @@ type CtrlCtxType = {
 };
 
 const CtrlCtxStateDefaultVal: CtrlCtxType = {
-  state: { user: undefined, curTime: moment(), ongoingGoals: [] },
+  state: {
+    user: undefined,
+    curTime: moment(),
+    ongoingGoals: {} as { [key: string]: Goal },
+  },
   setState: () => {
     // Intentionally left blank
   },

@@ -13,13 +13,13 @@ class Task implements Reviewable {
   id: string;
   parent: Subgoal | Goal;
   name: string;
-  schedules: Schedule[];
+  schedules: { [key: string]: Schedule };
   isClosed: boolean;
 
   constructor(
     name: string,
     parent: Subgoal | Goal,
-    schedules: Schedule[] = [],
+    schedules: { [key: string]: Schedule } = {},
     isClosed: boolean = false,
     id?: string
   ) {
@@ -37,18 +37,21 @@ class Task implements Reviewable {
   ): Promise<Task> {
     const subgoal = parent instanceof Subgoal ? parent : undefined;
     const goal = parent instanceof Goal ? parent : subgoal!.goal;
-    const newTask = new Task(taskData.name, parent, [], taskData.isClosed, id);
-    newTask.schedules = await docRefsToSchedule(
+    const newTask = new Task(taskData.name, parent, {}, taskData.isClosed, id);
+    const schedules = await docRefsToSchedule(
       goal,
       subgoal,
       newTask,
       taskData.schedules
     );
+    newTask.schedules = Object.fromEntries(
+      schedules.map((schd) => [schd.id, schd])
+    );
     return newTask;
   }
 
   getReviewStats = (): ReviewStats => {
-    const closedSchds = this.schedules.filter(
+    const closedSchds = Object.values(this.schedules).filter(
       (schd) => schd.startTime && schd.endTime && schd.endTime < moment()
     );
     const revStats = new ReviewStats(this);

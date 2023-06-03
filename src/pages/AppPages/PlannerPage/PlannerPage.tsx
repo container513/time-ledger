@@ -12,9 +12,20 @@ const PlannerPage = () => {
   const goal0 = new Goal("NLP Paper Survey", moment());
   const task1 = new Task("Read paper", goal0);
   const task2 = new Task("Write Proposal", goal0);
-  const subgoal1 = new SubGoal("Proposal", goal0, moment(), [task1, task2]);
+  const subgoal1 = new SubGoal(
+    "Proposal",
+    goal0,
+    moment(),
+    Object.fromEntries([task1, task2].map((task) => [task.id, task]))
+  );
   const subgoal0 = new SubGoal("Implementation", goal0, moment());
-  const goal1 = new Goal("NLP Paper Survey", moment(), [subgoal1, subgoal0]);
+  const goal1 = new Goal(
+    "NLP Paper Survey",
+    moment(),
+    Object.fromEntries(
+      [subgoal1, subgoal0].map((subgoal) => [subgoal.id, subgoal])
+    )
+  );
   const schedule1: Schedule = new Schedule(
     goal1,
     subgoal1,
