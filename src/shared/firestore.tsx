@@ -62,8 +62,7 @@ const fetchScheduleOfDate = async (uid: string, date: Moment) => {
     .get();
 
   querySnapshot.forEach((doc) => {
-    console.log(doc.id, doc.data());
-    // TODO: create schedule objects
+    // TODO: create schedule objects based on doc.id and doc.data()
   });
 };
 
