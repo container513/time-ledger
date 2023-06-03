@@ -9,6 +9,7 @@ type CtrlCtxState = {
   user: User | undefined;
   curTime: Moment;
   ongoingGoals: { [key: string]: Goal };
+  formResult: { [key: string]: string | boolean };
 };
 
 type CtrlCtxType = {
@@ -20,7 +21,8 @@ const CtrlCtxStateDefaultVal: CtrlCtxType = {
   state: {
     user: undefined,
     curTime: moment(),
-    ongoingGoals: {} as { [key: string]: Goal },
+    ongoingGoals: {},
+    formResult: {},
   },
   setState: () => {
     // Intentionally left blank

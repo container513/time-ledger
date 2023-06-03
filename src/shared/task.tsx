@@ -69,6 +69,13 @@ class Task implements Reviewable {
     }
     return revStats;
   };
+
+  static createFromFormResult = (
+    formResult: { [key: string]: string | boolean },
+    parent: Subgoal | Goal
+  ): Task => {
+    return new Task(formResult["name"] as string, parent, {});
+  };
 }
 
 interface TaskData {

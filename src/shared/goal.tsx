@@ -67,6 +67,16 @@ class Goal implements Reviewable {
     const childRevStats = subgoalRevStats.concat(taskRevStats);
     return ReviewStats.aggregateReviewStats(this, childRevStats);
   };
+
+  static createFromFormResult = (formResult: { [key: string]: string }): Goal => {
+    return new Goal(
+      formResult["name"],
+      moment(formResult["deadline"]),
+      {},
+      {},
+      false
+    );
+  };
 }
 
 interface GoalData {

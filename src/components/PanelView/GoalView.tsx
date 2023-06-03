@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { dateFormatStr } from "../../shared/utils";
 import { IoAddCircleOutline } from "react-icons/io5";
 
@@ -6,9 +6,10 @@ import SubGoalView from "./SubGoalView";
 import TaskView from "./TaskView";
 import ModalTemplate from "./ModalTemplate";
 import Goal from "../../shared/goal";
-import { goalForm } from "../../shared/goal";
+import Subgoal, { subgoalForm } from "../../shared/subgoal";
 import NarrowRight from "../../assets/images/narrow-right.png";
 import NarrowDown from "../../assets/images/narrow-down.png";
+import { ControlContext } from "../../shared/controlContext";
 import "./GoalView.css";
 
 interface VisibilityState {
@@ -16,6 +17,7 @@ interface VisibilityState {
 }
 
 const GoalView = (goal: Goal) => {
+  const { state, setState } = useContext(ControlContext);
   const [toggle, setToggle] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [visible, setVisible] = useState<VisibilityState>({
@@ -77,7 +79,15 @@ const GoalView = (goal: Goal) => {
         handleClose={() => {
           setShowModal(false);
         }}
-        data={goalForm}
+        handleSubmit={() => {
+          const subgoal = Subgoal.createFromFormResult(state.formResult, goal);
+          const newOngoingGoals = { ...state.ongoingGoals };
+          newOngoingGoals[goal.id].subgoals[subgoal.id] = subgoal;
+          setState({ ongoingGoals: newOngoingGoals });
+          setState({ formResult: {} });
+          setShowModal(false);
+        }}
+        data={subgoalForm}
         title="Add New Subgoal"
       />
     </div>
