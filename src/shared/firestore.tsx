@@ -1,7 +1,9 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
+import { Moment } from "moment";
 
 import Goal, { GoalData } from "./goal";
+import Schedule from "./schedule";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIRESTORE_KEY,
@@ -49,4 +51,25 @@ const fetchGoalReviewStats = async (uid: string) => {
   return goals.map((goal) => goal.getReviewStats());
 };
 
-export { firebaseApp, fetchGoal, fetchOngoingGoals, fetchGoalReviewStats };
+const fetchScheduleOfDate = async (uid: string, date: Moment) => {
+  const collectionRef = db.collection(uid);
+  const startOfDate = date.clone().startOf("d"); // requires clone() since startOf() is not in-place
+  const endOfDate = date.clone().endOf("d");
+  const querySnapshot = await collectionRef
+    .where("type", "==", Schedule.type)
+    .where("date", ">=", startOfDate.toDate())
+    .where("date", "<=", endOfDate.toDate())
+    .get();
+
+  querySnapshot.forEach((doc) => {
+    // TODO: create schedule objects based on doc.id and doc.data()
+  });
+};
+
+export {
+  firebaseApp,
+  fetchGoal,
+  fetchOngoingGoals,
+  fetchGoalReviewStats,
+  fetchScheduleOfDate,
+};
