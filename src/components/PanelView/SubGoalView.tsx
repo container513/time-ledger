@@ -2,7 +2,9 @@ import { useState } from "react";
 import { IoAddCircleOutline } from "react-icons/io5";
 
 import SubGoal from "../../shared/subgoal";
+import { taskForm } from "../../shared/task";
 import TaskView from "./TaskView";
+import ModalTemplate from "./ModalTemplate";
 import NarrowRight from "../../assets/images/narrow-right.png";
 import NarrowDown from "../../assets/images/narrow-down.png";
 
@@ -15,13 +17,10 @@ interface VisibilityState {
 
 const SubGoalView = (subgoal: SubGoal) => {
   const [toggle, setToggle] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [visible, setVisible] = useState<VisibilityState>({
     visibility: "hidden",
   });
-
-  const addNewTask = () => {
-    console.log("add new task");
-  };
 
   return (
     <div>
@@ -58,7 +57,7 @@ const SubGoalView = (subgoal: SubGoal) => {
         <div
           className="panel-subgoal-add"
           style={visible}
-          onClick={() => addNewTask()}
+          onClick={() => setShowModal(true)}
         >
           <IoAddCircleOutline className="add-icon" />
         </div>
@@ -69,6 +68,14 @@ const SubGoalView = (subgoal: SubGoal) => {
             return <TaskView key={index} {...task} />;
           })}
       </div>
+      <ModalTemplate
+        show={showModal}
+        handleClose={() => {
+          setShowModal(false);
+        }}
+        data={taskForm}
+        title="Add New Task"
+      />
     </div>
   );
 };

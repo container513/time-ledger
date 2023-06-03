@@ -72,5 +72,15 @@ interface SubgoalData {
   isClosed: boolean;
 }
 
+interface SubgoalForm {
+  name: "text" | "checkbox";
+  deadline: "text" | "checkbox";
+}
+
+export const subgoalForm: SubgoalForm = {
+  name: "text",
+  deadline: "text",
+};
+
 export default Subgoal;
-export type { SubgoalData };
+export type { SubgoalData, SubgoalForm };
