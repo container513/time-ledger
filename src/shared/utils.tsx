@@ -43,8 +43,8 @@ export const docRefsToTasks = async (
       taskData: snapshot.data() as TaskData,
     };
   });
-  const snapshotWithId = await Promise.all(fetchPromises);
-  const tasks = snapshotWithId.map(({ taskId, taskData }) => {
+  const snapshotsWithId = await Promise.all(fetchPromises);
+  const tasks = snapshotsWithId.map(({ taskId, taskData }) => {
     return Task.createFromTaskData(taskId, parent, taskData);
   });
   return Promise.all(tasks);
@@ -64,7 +64,7 @@ export const docRefsToSchedule = async (
     };
   });
   const snapshotsWithId = await Promise.all(fetchPromises);
-  return snapshotsWithId.map(({ scheduleId, scheduleData }) => {
+  const schds = snapshotsWithId.map(({ scheduleId, scheduleData }) => {
     return Schedule.createFromScheduleData(
       scheduleId,
       goal,
@@ -73,6 +73,7 @@ export const docRefsToSchedule = async (
       scheduleData
     );
   });
+  return Promise.all(schds);
 };
 
 export const capitalizeFirstLetter = (str: string): string => {
