@@ -1,0 +1,12 @@
+.review-goals-table {
+  min-width: 600px;
+}
+
+.accordion-button,
+.accordion-button.show,
+.accordion-collapse,
+.accordion-button:not(.collapsed),
+.accordion-button:focus {
+  background-color: #eee9da;
+  border: none;
+}

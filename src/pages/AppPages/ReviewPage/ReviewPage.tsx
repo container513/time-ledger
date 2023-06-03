@@ -1,9 +1,12 @@
-import ReviewGoalView from "../../../components/ReviewGoalView/ReviewGoalView";
+import ReviewGoalsView from "../../../components/ReviewGoalsView/ReviewGoalsView";
+import PieChartView from "../../../components/PieChartView/PieChartView";
+import "./ReviewPage.css";
 
 const ReviewPage = () => {
   return (
-    <div>
-      <ReviewGoalView />
+    <div className="review-page">
+      <ReviewGoalsView />
+      <PieChartView />
     </div>
   );
 };
