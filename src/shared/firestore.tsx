@@ -80,8 +80,8 @@ const fetchScheduleOfDate = async (
       // point goal, subgoal, and task to that in the control context
       goal = ongoingGoals[goalId];
       if (sgId !== undefined) {
-        sg = goal.subgoals[sgId!];
-        task = sg!.tasks[taskId];
+        sg = goal.subgoals[sgId];
+        task = sg.tasks[taskId];
       } else {
         sg = undefined;
         task = goal.tasks[taskId];
