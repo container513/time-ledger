@@ -1,8 +1,10 @@
 import * as d3 from "d3";
 import { scaleOrdinal } from "d3-scale";
 import { schemeSet3 } from "d3-scale-chromatic";
+import { FaCircle } from "react-icons/fa";
 
 import { RowData } from "../ReviewGoalsView/ReviewGoalsView";
+import "./PieChartView.css";
 
 // use color theme defined in https://github.com/d3/d3-scale-chromatic
 const colorScale = scaleOrdinal(schemeSet3);
@@ -47,6 +49,25 @@ const PieChart = ({ width, height, data }: PieChartProps) => {
   );
 };
 
+const LegendsView = ({
+  selectedRowData,
+}: {
+  selectedRowData: RowData | undefined;
+}) => {
+  return (
+    <div className="pie-chart-legend-list">
+      {selectedRowData?.subRows.map((subrow, index) => {
+        return (
+          <div className="pie-chart-legend" key={index}>
+            <FaCircle color={colorScale(index.toString())} />
+            <div>{subrow.reviewStats.name}</div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
 const PieChartView = ({
   selectedRowData,
 }: {
@@ -63,8 +84,9 @@ const PieChartView = ({
         });
 
   return (
-    <div>
+    <div className="pie-chart-panel">
       <PieChart width={300} height={300} data={data} />
+      <LegendsView selectedRowData={selectedRowData} />
     </div>
   );
 };

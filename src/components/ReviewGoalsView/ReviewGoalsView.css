@@ -2,6 +2,8 @@
   width: 80%;
   min-width: 600px;
   max-height: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .accordion-button,
