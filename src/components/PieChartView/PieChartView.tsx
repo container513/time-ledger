@@ -4,7 +4,7 @@ import { schemeSet3 } from "d3-scale-chromatic";
 
 import { RowData } from "../ReviewGoalsView/ReviewGoalsView";
 
-// Create a color scale using the categorical color scheme
+// use color theme defined in https://github.com/d3/d3-scale-chromatic
 const colorScale = scaleOrdinal(schemeSet3);
 
 type DataItem = {
@@ -17,8 +17,6 @@ type PieChartProps = {
   height: number;
   data: DataItem[];
 };
-
-const colors = ["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"];
 
 const PieChart = ({ width, height, data }: PieChartProps) => {
   const pieGenerator = d3.pie<DataItem>().value((d) => d.value);
