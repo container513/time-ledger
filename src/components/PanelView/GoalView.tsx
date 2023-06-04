@@ -4,9 +4,10 @@ import { IoAddCircleOutline } from "react-icons/io5";
 
 import SubGoalView from "./SubGoalView";
 import TaskView from "./TaskView";
-import ModalTemplate from "./ModalTemplate";
+import ModalTemplate, { ModalFormProps } from "../ModalTemplate/ModalTemplate";
 import Goal from "../../shared/goal";
 import Subgoal, { subgoalForm } from "../../shared/subgoal";
+import Task, { taskForm } from "../../shared/task";
 import NarrowRight from "../../assets/images/narrow-right.png";
 import NarrowDown from "../../assets/images/narrow-down.png";
 import { ControlContext } from "../../shared/controlContext";
@@ -23,6 +24,35 @@ const GoalView = (goal: Goal) => {
   const [visible, setVisible] = useState<VisibilityState>({
     visibility: "hidden",
   });
+  const modals: ModalFormProps[] = [
+    {
+      handleSubmit: () => {
+        console.log(state.formResult);
+        const subgoal = Subgoal.createFromFormResult(state.formResult, goal);
+        const newOngoingGoals = { ...state.ongoingGoals };
+        newOngoingGoals[goal.id].subgoals[subgoal.id] = subgoal;
+        setToggle(true);
+        setState({ ongoingGoals: newOngoingGoals });
+        setState({ formResult: {} });
+        setShowModal(false);
+      },
+      data: subgoalForm,
+      title: "Subgoal",
+    },
+    {
+      handleSubmit: () => {
+        const task = Task.createFromFormResult(state.formResult, goal);
+        const newOngoingGoals = { ...state.ongoingGoals };
+        newOngoingGoals[goal.id].tasks[task.id] = task;
+        setToggle(true);
+        setState({ ongoingGoals: newOngoingGoals });
+        setState({ formResult: {} });
+        setShowModal(false);
+      },
+      data: taskForm,
+      title: "Task",
+    },
+  ];
 
   return (
     <div className="panel-goal-view">
@@ -75,20 +105,9 @@ const GoalView = (goal: Goal) => {
           })}
       </div>
       <ModalTemplate
+        modals={modals}
         show={showModal}
-        handleClose={() => {
-          setShowModal(false);
-        }}
-        handleSubmit={() => {
-          const subgoal = Subgoal.createFromFormResult(state.formResult, goal);
-          const newOngoingGoals = { ...state.ongoingGoals };
-          newOngoingGoals[goal.id].subgoals[subgoal.id] = subgoal;
-          setState({ ongoingGoals: newOngoingGoals });
-          setState({ formResult: {} });
-          setShowModal(false);
-        }}
-        data={subgoalForm}
-        title="Add New Subgoal"
+        handleClose={() => setShowModal(false)}
       />
     </div>
   );

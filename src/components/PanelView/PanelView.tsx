@@ -8,7 +8,7 @@ import {
 } from "react-icons/ai";
 
 import { ControlContext } from "../../shared/controlContext";
-import ModalTemplate from "./ModalTemplate";
+import ModalTemplate, { ModalFormProps } from "../ModalTemplate/ModalTemplate";
 import Goal, { goalForm } from "../../shared/goal";
 import GoalView from "./GoalView";
 import routes from "../../shared/routes";
@@ -20,6 +20,20 @@ const PanelView = () => {
   const [nav, setNav] = useState(false);
   const goals = state.ongoingGoals;
   const navigate = useNavigate();
+  const modals: ModalFormProps[] = [
+    {
+      handleSubmit: () => {
+        const goal = Goal.createFromFormResult(state.formResult);
+        const newOngoingGoals = { ...state.ongoingGoals };
+        newOngoingGoals[goal.id] = goal;
+        setState({ ongoingGoals: newOngoingGoals });
+        setState({ formResult: {} });
+        setShowModal(false);
+      },
+      data: goalForm,
+      title: "Goal",
+    },
+  ];
 
   const handleLogout = () => {
     setState({ user: undefined, ongoingGoals: {} });
@@ -81,20 +95,9 @@ const PanelView = () => {
         </button>
       </div>
       <ModalTemplate
+        modals={modals}
         show={showModal}
-        handleClose={() => {
-          setShowModal(false);
-        }}
-        handleSubmit={() => {
-          const goal = Goal.createFromFormResult(state.formResult);
-          const newOngoingGoals = { ...state.ongoingGoals };
-          newOngoingGoals[goal.id] = goal;
-          setState({ ongoingGoals: newOngoingGoals });
-          setState({ formResult: {} });
-          setShowModal(false);
-        }}
-        data={goalForm}
-        title="Add New Goal"
+        handleClose={() => setShowModal(false)}
       />
     </div>
   );
