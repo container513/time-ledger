@@ -84,12 +84,14 @@ const ReviewGoalsView = () => {
     fetchRows();
   }, [state.user?.uid]);
   return (
-    <MaterialReactTable
-      columns={columns}
-      data={rows}
-      enableExpanding
-      enableExpandAll={false}
-    />
+    <div className="review-table">
+      <MaterialReactTable
+        columns={columns}
+        data={rows}
+        enableExpanding
+        enableExpandAll={false}
+      />
+    </div>
   );
 };
 
