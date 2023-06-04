@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
-import { fetchOngoingGoals, firebaseApp } from "../../shared/firestore";
+import { fetchGoals, firebaseApp } from "../../shared/firestore";
 import routes from "../../shared/routes";
 import { ControlContext } from "../../shared/controlContext";
 import GoogleLogo from "../../assets//images/google-logo.png";
@@ -32,7 +32,7 @@ const LoginPage = () => {
 
     signInWithPopup(auth, provider)
       .then(async (result) => {
-        const ongoingGoals = await fetchOngoingGoals(result.user.uid);
+        const ongoingGoals = await fetchGoals(result.user.uid, true);
         setState({
           user: {
             uid: result.user.uid,

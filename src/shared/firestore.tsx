@@ -27,12 +27,15 @@ const fetchGoal = async (goalId: string, uid: string) => {
   return Goal.createFromGoalData(doc.id, doc.data() as GoalData);
 };
 
-const fetchOngoingGoals = async (uid: string) => {
+const fetchGoals = async (uid: string, ongoingOnly: boolean) => {
   const collectionRef = db.collection(uid);
-  const querySnapshot = await collectionRef
-    .where("type", "==", Goal.type)
-    .where("isClosed", "==", false)
-    .get();
+  const goalsQuery = collectionRef.where("type", "==", Goal.type);
+  let querySnapshot: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>;
+  if (ongoingOnly) {
+    querySnapshot = await goalsQuery.where("isClosed", "==", false).get();
+  } else {
+    querySnapshot = await goalsQuery.get();
+  }
   const goalPromises: Promise<Goal>[] = [];
   querySnapshot.forEach((doc) => {
     goalPromises.push(Goal.createFromGoalData(doc.id, doc.data() as GoalData));
@@ -144,7 +147,7 @@ const fetchScheduleOfDate = async (
 export {
   firebaseApp,
   fetchGoal,
-  fetchOngoingGoals,
+  fetchGoals,
   fetchGoalReviewStats,
   fetchScheduleOfDate,
 };
