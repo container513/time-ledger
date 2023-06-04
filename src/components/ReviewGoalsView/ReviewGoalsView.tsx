@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { MaterialReactTable, MRT_ColumnDef } from "material-react-table";
+import { Button } from "reactstrap";
 import moment from "moment";
 
 import { ControlContext } from "../../shared/controlContext";
@@ -9,7 +10,7 @@ import "./ReviewGoalsView.css";
 
 interface RowData {
   reviewStats: ReviewStats;
-  subRows?: RowData[];
+  subRows: RowData[];
 }
 
 const getRows = async (uid: string | undefined) => {
@@ -24,7 +25,7 @@ const getRows = async (uid: string | undefined) => {
     for (const subgoal of Object.values(goal.subgoals)) {
       const _taskRows: RowData[] = [];
       for (const task of Object.values(subgoal.tasks)) {
-        _taskRows.push({ reviewStats: task.getReviewStats() });
+        _taskRows.push({ reviewStats: task.getReviewStats(), subRows: [] });
       }
       subgoalRows.push({
         reviewStats: subgoal.getReviewStats(),
@@ -32,7 +33,7 @@ const getRows = async (uid: string | undefined) => {
       });
     }
     for (const task of Object.values(goal.tasks)) {
-      taskRows.push({ reviewStats: task.getReviewStats() });
+      taskRows.push({ reviewStats: task.getReviewStats(), subRows: [] });
     }
     rows.push({
       reviewStats: goal.getReviewStats(),
@@ -42,47 +43,64 @@ const getRows = async (uid: string | undefined) => {
   return rows;
 };
 
-const columns: MRT_ColumnDef<RowData>[] = [
-  {
-    header: "Title",
-    accessorFn: (originalRow: RowData) => originalRow.reviewStats.name,
-  },
-  {
-    header: "Actual Effort",
-    accessorFn: (originalRow: RowData) =>
-      originalRow.reviewStats.actualEffort.humanize(),
-  },
-  {
-    header: "Period",
-    accessorFn: (originalRow: RowData) =>
-      originalRow.reviewStats.endDate && originalRow.reviewStats.startDate
-        ? moment
-            .duration(
-              originalRow.reviewStats.endDate.diff(
-                originalRow.reviewStats.startDate
-              )
-            )
-            .humanize()
-        : "0",
-  },
-  {
-    header: "End Date",
-    accessorFn: (originalRow: RowData) =>
-      originalRow.reviewStats.isClosed
-        ? originalRow.reviewStats.endDate?.format("YYYY-MM-DD")
-        : "Ongoing",
-  },
-];
-
-const ReviewGoalsView = () => {
+const ReviewGoalsView = ({
+  setSelectedRowData,
+}: {
+  setSelectedRowData: React.Dispatch<React.SetStateAction<RowData | undefined>>;
+}) => {
   const { state } = useContext(ControlContext);
   const [rows, setRows] = useState<RowData[]>([]);
+  const columns: MRT_ColumnDef<RowData>[] = [
+    {
+      header: "Title",
+      accessorFn: (originalRow: RowData) => originalRow.reviewStats.name,
+    },
+    {
+      header: "Actual Effort",
+      accessorFn: (originalRow: RowData) =>
+        originalRow.reviewStats.actualEffort.humanize(),
+    },
+    {
+      header: "Period",
+      accessorFn: (originalRow: RowData) =>
+        originalRow.reviewStats.endDate && originalRow.reviewStats.startDate
+          ? moment
+              .duration(
+                originalRow.reviewStats.endDate.diff(
+                  originalRow.reviewStats.startDate
+                )
+              )
+              .humanize()
+          : "0",
+    },
+    {
+      header: "End Date",
+      accessorFn: (originalRow: RowData) =>
+        originalRow.reviewStats.isClosed
+          ? originalRow.reviewStats.endDate?.format("YYYY-MM-DD")
+          : "Ongoing",
+    },
+    {
+      header: "Action",
+      accessorFn: (originalRow: RowData) => {
+        return originalRow.subRows.length ? (
+          <Button onClick={() => setSelectedRowData(originalRow)}>
+            Show Pie Chart
+          </Button>
+        ) : (
+          <div></div>
+        );
+      },
+    },
+  ];
+
   useEffect(() => {
     const fetchRows = async () => {
       setRows(await getRows(state.user?.uid));
     };
     fetchRows();
   }, [state.user?.uid]);
+
   return (
     <div className="review-table">
       <MaterialReactTable
@@ -96,3 +114,4 @@ const ReviewGoalsView = () => {
 };
 
 export default ReviewGoalsView;
+export type { RowData };

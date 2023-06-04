@@ -1,6 +1,7 @@
 .review-table {
-  width: 50%;
+  width: 80%;
   min-width: 600px;
+  max-height: 100%;
 }
 
 .accordion-button,
