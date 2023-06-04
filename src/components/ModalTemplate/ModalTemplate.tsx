@@ -7,6 +7,7 @@ import FieldView from "./FieldView";
 import { GoalForm } from "../../shared/goal";
 import { SubgoalForm } from "../../shared/subgoal";
 import { TaskForm } from "../../shared/task";
+import { ScheduleForm } from "../../shared/schedule";
 import { ControlContext } from "../../shared/controlContext";
 
 import "./ModalTemplate.css";
@@ -19,7 +20,8 @@ interface ModalTemplateProps {
 
 interface ModalFormProps {
   handleSubmit: () => void;
-  data: GoalForm | TaskForm | SubgoalForm;
+  data: GoalForm | TaskForm | SubgoalForm | ScheduleForm;
+  tabTitle: string;
   title: string;
 }
 
@@ -51,13 +53,13 @@ const ModalTemplate = ({ modals, show, handleClose }: ModalTemplateProps) => {
               key={index}
               onClick={() => setId(index)}
             >
-              {"New " + modal.title}
+              {modal.tabTitle}
             </div>
           );
         })}
       </div>
       <Modal.Header closeButton>
-        <Modal.Title>{"Create " + modals[id].title}</Modal.Title>
+        <Modal.Title>{modals[id].title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>

@@ -39,7 +39,8 @@ const GoalView = (goal: Goal) => {
         setShowModal(false);
       },
       data: subgoalForm,
-      title: "Subgoal",
+      tabTitle: "New Subgoal",
+      title: "Create Subgoal",
     },
     {
       handleSubmit: () => {
@@ -54,7 +55,8 @@ const GoalView = (goal: Goal) => {
         setShowModal(false);
       },
       data: taskForm,
-      title: "Task",
+      tabTitle: "New Task",
+      title: "Create Task",
     },
   ];
 

@@ -86,6 +86,33 @@ class Schedule {
     if (!this.startTime || !this.endTime) return undefined;
     return moment.duration(this.endTime.diff(this.startTime));
   };
+
+  static createFromFormResult = (
+    formResult: {
+      [key: string]: string | boolean;
+    },
+    date: Moment,
+    schedule: Schedule
+  ): Schedule => {
+    let startMoment: Moment | undefined, endMoment: Moment | undefined;
+    if (formResult.startTime !== "") {
+      const dateStr = date.format("YYYY-MM-DD");
+      const dateTimeStr = dateStr + " " + formResult.startTime;
+      startMoment = moment(dateTimeStr);
+    } else {
+      startMoment = undefined;
+    }
+    if (formResult.endTime !== "") {
+      const dateStr = date.format("YYYY-MM-DD");
+      const dateTimeStr = dateStr + " " + formResult.endTime;
+      endMoment = moment(dateTimeStr);
+    } else {
+      startMoment = undefined;
+    }
+    schedule.startTime = startMoment;
+    schedule.endTime = endMoment;
+    return schedule;
+  };
 }
 
 interface ScheduleData {
@@ -96,5 +123,15 @@ interface ScheduleData {
   endTime?: firebase.firestore.Timestamp;
 }
 
+interface ScheduleForm {
+  startTime: "text" | "checkbox";
+  endTime: "text" | "checkbox";
+}
+
+export const scheduleForm: ScheduleForm = {
+  startTime: "text",
+  endTime: "text",
+};
+
 export default Schedule;
-export type { ScheduleData };
+export type { ScheduleData, ScheduleForm };

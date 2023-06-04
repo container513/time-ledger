@@ -70,7 +70,7 @@ const DayView = ({ index, curDate }: { index: number; curDate: Moment }) => {
       <div className="day-of-week">{dayOfTheWeek[index]}</div>
       <div className="day-view-date">{curDate.date()}</div>
       {schedules.map((schedule, idx) => {
-        return <ScheduleView key={idx} schedule={schedule} />;
+        return <ScheduleView key={idx} schedule={schedule} curDate={curDate}/>;
       })}
     </div>
   );

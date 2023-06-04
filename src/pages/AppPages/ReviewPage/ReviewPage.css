@@ -2,7 +2,6 @@
   background-color: #eee9da;
   display: flex;
   justify-content: space-between;
-  gap: 50px;
-  width: 100%;
+  flex: 1 1;
   padding: 80px 50px;
 }

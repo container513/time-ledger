@@ -33,7 +33,8 @@ const PanelView = () => {
         setShowModal(false);
       },
       data: goalForm,
-      title: "Goal",
+      tabTitle: "New Goal",
+      title: "Create Goal",
     },
   ];
 

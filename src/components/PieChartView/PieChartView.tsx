@@ -5,6 +5,7 @@ import { FaCircle } from "react-icons/fa";
 
 import { RowData } from "../ReviewGoalsView/ReviewGoalsView";
 import "./PieChartView.css";
+import { useEffect } from "react";
 
 // use color theme defined in https://github.com/d3/d3-scale-chromatic
 const colorScale = scaleOrdinal(schemeSet3);
