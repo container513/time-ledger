@@ -17,6 +17,9 @@
   font-size: 1.8rem;
   margin: 0 1rem;
 }
+.planner-bnt:hover {
+  cursor: pointer;
+}
 .planner-left-btn {
   width: 25px;
   height: 25px;

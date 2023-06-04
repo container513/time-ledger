@@ -6,6 +6,10 @@
 
   border-left: 1px solid #a4a4a4;
 }
+.day-view-date{
+  color: #585757;
+  font-size: 1.5rem;
+}
 .day-of-week {
   color: #585757;
   font-size: 1.5rem;

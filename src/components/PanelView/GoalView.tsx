@@ -27,7 +27,6 @@ const GoalView = (goal: Goal) => {
   const modals: ModalFormProps[] = [
     {
       handleSubmit: () => {
-        console.log(state.formResult);
         const subgoal = Subgoal.createFromFormResult(state.formResult, goal);
         const newOngoingGoals = { ...state.ongoingGoals };
         newOngoingGoals[goal.id].subgoals[subgoal.id] = subgoal;
