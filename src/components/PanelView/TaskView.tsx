@@ -1,9 +1,19 @@
-import React from "react";
+import { useDrag } from "react-dnd";
 import Task from "../../shared/task";
+import { DragItemTypes } from "../../shared/DragItemTypes";
 import "./TaskView.css";
 
 const TaskView = (task: Task) => {
-  return <div className="panel-task">{task.name}</div>;
+  const [, dragRef] = useDrag({
+    type: DragItemTypes.Task,
+    item: { type: DragItemTypes.Task, task },
+  });
+
+  return (
+    <div className="panel-task" ref={dragRef}>
+      {task.name}
+    </div>
+  );
 };
 
 export default TaskView;
