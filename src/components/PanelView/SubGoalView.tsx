@@ -9,6 +9,7 @@ import NarrowRight from "../../assets/images/narrow-right.png";
 import NarrowDown from "../../assets/images/narrow-down.png";
 import { ControlContext } from "../../shared/controlContext";
 import { dateFormatStr } from "../../shared/utils";
+import { storeSubgoal, storeTask } from "../../shared/firestore";
 
 import "./SubGoalView.css";
 
@@ -33,6 +34,8 @@ const SubGoalView = (subgoal: SubGoal) => {
         setToggle(true);
         setState({ ongoingGoals: newOngoingGoals });
         setState({ formResult: {} });
+        storeTask(state.user!.uid, task);
+        storeSubgoal(state.user!.uid, subgoal);
         setShowModal(false);
       },
       data: taskForm,

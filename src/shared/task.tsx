@@ -1,6 +1,7 @@
 import { v4 as uuid } from "uuid";
 import firebase from "firebase/compat/app";
 import moment, { Duration } from "moment";
+import { DocumentData, DocumentReference } from "@firebase/firestore-types";
 
 import Schedule from "./schedule";
 import Subgoal from "./subgoal";
@@ -71,6 +72,19 @@ class Task implements Reviewable {
       revStats.endDate = moment.max(closedSchds.map((schd) => schd.endTime!));
     }
     return revStats;
+  };
+
+  getTaskData = (
+    parentRef: DocumentReference<DocumentData>,
+    scheduleRefs: DocumentReference<DocumentData>[]
+  ): TaskData => {
+    return {
+      type: Task.type,
+      parent: parentRef,
+      name: this.name,
+      schedules: scheduleRefs,
+      isClosed: this.isClosed,
+    };
   };
 
   static createFromFormResult = (

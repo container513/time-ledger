@@ -150,10 +150,50 @@ const fetchScheduleOfDate = async (
   return Promise.all(promises);
 };
 
+const storeSchedule = async (uid: string, schedule: Schedule) => {
+  const taskRef = db.doc("/" + uid + "/" + schedule.task.id);
+  db.collection(uid).doc(schedule.id).set(schedule.getScheduleData(taskRef));
+};
+
+const storeTask = async (uid: string, task: Task) => {
+  const parentRef = db.doc("/" + uid + "/" + task.parent.id);
+  const scheduleRefs = Object.values(task.schedules).map((schd) =>
+    db.doc("/" + uid + "/" + schd.id)
+  );
+  db.collection(uid)
+    .doc(task.id)
+    .set(task.getTaskData(parentRef, scheduleRefs));
+};
+
+const storeSubgoal = async (uid: string, subgoal: Subgoal) => {
+  console.log("storeSubgoal", "/" + uid + "/" + subgoal.goal.id);
+  const goalRef = db.doc("/" + uid + "/" + subgoal.goal.id);
+  const taskRefs = Object.values(subgoal.tasks).map((task) => {
+    return db.doc("/" + uid + "/" + task.id);
+  });
+  db.collection(uid)
+    .doc(subgoal.id)
+    .set(subgoal.getSubgoalData(goalRef, taskRefs));
+};
+
+const storeGoal = async (uid: string, goal: Goal) => {
+  const subgoalRefs = Object.values(goal.subgoals).map((subgoal) =>
+    db.doc("/" + uid + "/" + subgoal.id)
+  );
+  const taskRefs = Object.values(goal.tasks).map((task) =>
+    db.doc("/" + uid + "/" + task.id)
+  );
+  db.collection(uid).doc(goal.id).set(goal.getGoalData(subgoalRefs, taskRefs));
+};
+
 export {
   firebaseApp,
   fetchGoal,
   fetchGoals,
   fetchGoalReviewStats,
   fetchScheduleOfDate,
+  storeGoal,
+  storeSubgoal,
+  storeTask,
+  storeSchedule,
 };

@@ -18,7 +18,6 @@ const Index = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("Redirecting...");
     setTimeout(() => {
       // Redirects to login page, note the `replace: true`
       navigate(routes.login, { replace: true });

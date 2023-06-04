@@ -1,6 +1,7 @@
 import { v4 as uuid } from "uuid";
 import firebase from "firebase/compat/app";
 import moment, { Moment } from "moment";
+import { DocumentData, DocumentReference } from "@firebase/firestore-types";
 
 import Task from "./task";
 import Goal from "./goal";
@@ -60,6 +61,20 @@ class Subgoal implements Reviewable {
       task.getReviewStats()
     );
     return ReviewStats.aggregateReviewStats(this, taskRevStats);
+  };
+
+  getSubgoalData = (
+    goalRef: DocumentReference<DocumentData>,
+    taskRefs: DocumentReference<DocumentData>[]
+  ): SubgoalData => {
+    return {
+      type: Subgoal.type,
+      goal: goalRef,
+      name: this.name,
+      tasks: taskRefs,
+      deadline: firebase.firestore.Timestamp.fromDate(this.deadline.toDate()),
+      isClosed: this.isClosed,
+    };
   };
 
   static createFromFormResult = (

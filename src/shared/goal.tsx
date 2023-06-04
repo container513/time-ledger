@@ -2,6 +2,7 @@ import { v4 as uuid } from "uuid";
 import firebase from "firebase/compat/app";
 import _ from "lodash";
 import moment, { Moment } from "moment";
+import { DocumentData, DocumentReference } from "@firebase/firestore-types";
 
 import Subgoal from "./subgoal";
 import Task from "./task";
@@ -69,6 +70,20 @@ class Goal implements Reviewable {
     );
     const childRevStats = subgoalRevStats.concat(taskRevStats);
     return ReviewStats.aggregateReviewStats(this, childRevStats);
+  };
+
+  getGoalData = (
+    sugoalRefs: DocumentReference<DocumentData>[],
+    taskRefs: DocumentReference<DocumentData>[]
+  ): GoalData => {
+    return {
+      type: Goal.type,
+      name: this.name,
+      subgoals: sugoalRefs,
+      tasks: taskRefs,
+      deadline: firebase.firestore.Timestamp.fromDate(this.deadline.toDate()),
+      isClosed: this.isClosed,
+    };
   };
 
   static createFromFormResult = (formResult: {

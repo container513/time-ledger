@@ -12,6 +12,7 @@ import ModalTemplate, { ModalFormProps } from "../ModalTemplate/ModalTemplate";
 import Goal, { goalForm } from "../../shared/goal";
 import GoalView from "./GoalView";
 import routes from "../../shared/routes";
+import { storeGoal } from "../../shared/firestore";
 import "./PanelView.css";
 
 const PanelView = () => {
@@ -28,6 +29,7 @@ const PanelView = () => {
         newOngoingGoals[goal.id] = goal;
         setState({ ongoingGoals: newOngoingGoals });
         setState({ formResult: {} });
+        storeGoal(state.user!.uid, goal);
         setShowModal(false);
       },
       data: goalForm,

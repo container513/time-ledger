@@ -7,7 +7,11 @@ import ScheduleView from "./ScheduleView";
 import Goal from "../../shared/goal";
 import Task from "../../shared/task";
 import Subgoal from "../../shared/subgoal";
-import { fetchScheduleOfDate } from "../../shared/firestore";
+import {
+  fetchScheduleOfDate,
+  storeSchedule,
+  storeTask,
+} from "../../shared/firestore";
 import { ControlContext } from "../../shared/controlContext";
 import { DragItemTypes } from "../../shared/DragItemTypes";
 import "./DayView.css";
@@ -29,11 +33,11 @@ const DayView = ({ index, curDate }: { index: number; curDate: Moment }) => {
     accept: DragItemTypes.Task,
     drop: (item: { type: string; task: Task }) => {
       let goal: Goal, subgoal: Subgoal | undefined;
-      if (item.task.parent instanceof Goal) {
-        goal = item.task.parent;
+      if ("subgoals" in { ...item.task.parent }) {
+        goal = item.task.parent as Goal;
         subgoal = undefined;
       } else {
-        subgoal = item.task.parent;
+        subgoal = item.task.parent as Subgoal;
         goal = subgoal!.goal;
       }
       const sched = new Schedule(goal, subgoal, item.task, curDate);
@@ -41,6 +45,8 @@ const DayView = ({ index, curDate }: { index: number; curDate: Moment }) => {
       item.task.schedules[sched.id] = sched;
       setState({ ongoingGoals: newOngoingGoals });
       setSchedules([...schedules, sched]);
+      storeSchedule(state.user!.uid, sched);
+      storeTask(state.user!.uid, item.task);
     },
   });
 

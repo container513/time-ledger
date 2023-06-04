@@ -12,6 +12,7 @@ import NarrowRight from "../../assets/images/narrow-right.png";
 import NarrowDown from "../../assets/images/narrow-down.png";
 import { ControlContext } from "../../shared/controlContext";
 import "./GoalView.css";
+import { storeGoal, storeSubgoal, storeTask } from "../../shared/firestore";
 
 interface VisibilityState {
   visibility: "visible" | "hidden";
@@ -33,6 +34,8 @@ const GoalView = (goal: Goal) => {
         setToggle(true);
         setState({ ongoingGoals: newOngoingGoals });
         setState({ formResult: {} });
+        storeGoal(state.user!.uid, goal);
+        storeSubgoal(state.user!.uid, subgoal);
         setShowModal(false);
       },
       data: subgoalForm,
@@ -46,6 +49,8 @@ const GoalView = (goal: Goal) => {
         setToggle(true);
         setState({ ongoingGoals: newOngoingGoals });
         setState({ formResult: {} });
+        storeGoal(state.user!.uid, goal);
+        storeTask(state.user!.uid, task);
         setShowModal(false);
       },
       data: taskForm,

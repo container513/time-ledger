@@ -1,6 +1,7 @@
 import { v4 as uuid } from "uuid";
 import firebase from "firebase/compat/app";
 import moment, { Moment, Duration } from "moment";
+import { DocumentData, DocumentReference } from "@firebase/firestore-types";
 
 import Goal from "./goal";
 import Subgoal from "./subgoal";
@@ -59,6 +60,27 @@ class Schedule {
       id
     );
   }
+
+  getScheduleData = (
+    taskRef: DocumentReference<DocumentData>
+  ): ScheduleData => {
+    const res: ScheduleData = {
+      type: Schedule.type,
+      task: taskRef,
+      date: firebase.firestore.Timestamp.fromDate(this.date.toDate()),
+    };
+    if (this.startTime) {
+      res.startTime = firebase.firestore.Timestamp.fromDate(
+        this.startTime.toDate()
+      );
+    }
+    if (this.endTime) {
+      res.endTime = firebase.firestore.Timestamp.fromDate(
+        this.endTime.toDate()
+      );
+    }
+    return res;
+  };
 
   getDuration = (): Duration | undefined => {
     if (!this.startTime || !this.endTime) return undefined;
