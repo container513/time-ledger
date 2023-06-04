@@ -147,8 +147,7 @@ const fetchScheduleOfDate = async (
     });
     promises.push(promise);
   });
-  const schedules = await Promise.all(promises);
-  return schedules;
+  return await Promise.all(promises);
 };
 
 export {
