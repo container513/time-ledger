@@ -1,6 +1,11 @@
 import * as d3 from "d3";
+import { scaleOrdinal } from "d3-scale";
+import { schemeSet3 } from "d3-scale-chromatic";
 
 import { RowData } from "../ReviewGoalsView/ReviewGoalsView";
+
+// Create a color scale using the categorical color scheme
+const colorScale = scaleOrdinal(schemeSet3);
 
 type DataItem = {
   name: string;
@@ -19,14 +24,15 @@ const PieChart = ({ width, height, data }: PieChartProps) => {
   const pieGenerator = d3.pie<DataItem>().value((d) => d.value);
   const angles = pieGenerator(data);
   const arcPathGenerator = d3.arc();
-  const arcs = angles.map((ang) =>
-    arcPathGenerator({
+  const arcs = angles.map((ang, i) => ({
+    path: arcPathGenerator({
       innerRadius: 0,
       outerRadius: 150,
       startAngle: ang.startAngle,
       endAngle: ang.endAngle,
-    })
-  );
+    }),
+    color: colorScale(i.toString()),
+  }));
 
   return (
     <div>
@@ -35,7 +41,7 @@ const PieChart = ({ width, height, data }: PieChartProps) => {
           {arcs
             .filter((arc) => arc != null)
             .map((arc, i) => {
-              return <path key={i} d={arc!.toString()} fill={colors[i]} />;
+              return <path key={i} d={arc.path!.toString()} fill={arc.color} />;
             })}
         </g>
       </svg>
