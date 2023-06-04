@@ -1,5 +1,7 @@
 import { useEffect, Component } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 import AppPages from "./pages/AppPages/AppPages";
 import LoginPage from "./pages/LoginPage/LoginPage";
@@ -38,13 +40,15 @@ class App extends Component {
           },
         }}
       >
-        <div className="App">
-          <Routes>
-            <Route path={routes.index} element={<Index />} />
-            <Route path={routes.login} element={<LoginPage />} />
-            <Route path={routes.appPage} element={<AppPages />} />
-          </Routes>
-        </div>
+        <DndProvider backend={HTML5Backend}>
+          <div className="App">
+            <Routes>
+              <Route path={routes.index} element={<Index />} />
+              <Route path={routes.login} element={<LoginPage />} />
+              <Route path={routes.appPage} element={<AppPages />} />
+            </Routes>
+          </div>
+        </DndProvider>
       </ControlContext.Provider>
     );
   }
