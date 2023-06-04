@@ -38,7 +38,7 @@ const DayView = ({ index, curDate }: { index: number; curDate: Moment }) => {
         subgoal = undefined;
       } else {
         subgoal = item.task.parent as Subgoal;
-        goal = subgoal!.goal;
+        goal = subgoal.goal;
       }
       const sched = new Schedule(goal, subgoal, item.task, curDate);
       const newOngoingGoals = { ...state.ongoingGoals };
@@ -53,9 +53,8 @@ const DayView = ({ index, curDate }: { index: number; curDate: Moment }) => {
   useEffect(() => {
     if (state.user === undefined) {
       setSchedules([]);
-      return;
     } else {
-      fetchScheduleOfDate(state.user!.uid, curDate, state.ongoingGoals)
+      fetchScheduleOfDate(state.user.uid, curDate, state.ongoingGoals)
         .then((schds) => {
           setSchedules(schds);
         })
@@ -70,7 +69,7 @@ const DayView = ({ index, curDate }: { index: number; curDate: Moment }) => {
       <div className="day-of-week">{dayOfTheWeek[index]}</div>
       <div className="day-view-date">{curDate.date()}</div>
       {schedules.map((schedule, idx) => {
-        return <ScheduleView key={idx} schedule={schedule} curDate={curDate}/>;
+        return <ScheduleView key={idx} schedule={schedule} curDate={curDate} />;
       })}
     </div>
   );
