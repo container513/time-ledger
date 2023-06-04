@@ -1,12 +1,19 @@
+import { Moment } from "moment";
+
 import DayView from "./DayView";
-import Schedule from "../../shared/schedule";
 import "./WeekView.css";
 
-const WeekView = ({ week }: { week: Schedule[][] }) => {
+const WeekView = ({ week, curDate }: { week: number[]; curDate: Moment }) => {
   return (
     <div className="planner-week-view">
-      {week.map((day, index) => {
-        return <DayView key={index} day={day} index={index} />;
+      {week.map((index) => {
+        return (
+          <DayView
+            key={index}
+            index={index}
+            curDate={curDate.clone().day(index)}
+          />
+        );
       })}
       <div className="planner-week-last-border"></div>
     </div>
