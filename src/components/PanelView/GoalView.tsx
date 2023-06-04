@@ -31,6 +31,7 @@ const GoalView = (goal: Goal) => {
         const subgoal = Subgoal.createFromFormResult(state.formResult, goal);
         const newOngoingGoals = { ...state.ongoingGoals };
         newOngoingGoals[goal.id].subgoals[subgoal.id] = subgoal;
+        setToggle(true);
         setState({ ongoingGoals: newOngoingGoals });
         setState({ formResult: {} });
         setShowModal(false);
@@ -43,6 +44,7 @@ const GoalView = (goal: Goal) => {
         const task = Task.createFromFormResult(state.formResult, goal);
         const newOngoingGoals = { ...state.ongoingGoals };
         newOngoingGoals[goal.id].tasks[task.id] = task;
+        setToggle(true);
         setState({ ongoingGoals: newOngoingGoals });
         setState({ formResult: {} });
         setShowModal(false);

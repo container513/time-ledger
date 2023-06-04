@@ -30,6 +30,7 @@ const SubGoalView = (subgoal: SubGoal) => {
         const newOngoingGoals = { ...state.ongoingGoals };
         newOngoingGoals[subgoal.goal.id].subgoals[subgoal.id].tasks[task.id] =
           task;
+        setToggle(true);
         setState({ ongoingGoals: newOngoingGoals });
         setState({ formResult: {} });
         setShowModal(false);
